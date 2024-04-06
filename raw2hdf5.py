@@ -1,14 +1,6 @@
 """
 process data
 
-Task: Segmentation of gliomas in pre-operative MRI scans
-     sub-regions considered for evaluation{
-        1: NCR(necrotic), NET(non-enhancing tumor)
-        2: ED(peritumoral edema)
-        4: ET(enhancing tumor)
-        0: else
-     }
-
 Note:
     2015
     2017{ 
@@ -56,6 +48,24 @@ read_nii_head_and_data = lambda file_path: [nib.load(file_path).header, nib.load
 
 # TODO 暂且没弄数据增强 先看结果
 
+def crop_nparray(original_matrix : np.ndarray, target_shape : tuple = (160, 192, 128)) -> np.ndarray:
+    """Crop the center part of the original matrix to the target shape.
+
+    Args:
+        original_matrix: The original NumPy array to be cropped.
+        target_shape: The target shape to crop the matrix to (default is (160, 192, 128)).
+
+    Returns:
+        np.ndarray: The cropped matrix.
+    """
+    # Calculate the start indices for cropping the center part
+    start_indices = [(original_dim - target_dim) // 2 for original_dim, target_dim in zip(original_matrix.shape, target_shape)]
+    # Calculate the end indices for cropping the center part
+    end_indices = [start_idx + target_dim for start_idx, target_dim in zip(start_indices, target_shape)]
+    # Crop the matrix to the center part based on calculated indices
+    cropped_matrix = original_matrix[start_indices[0]:end_indices[0], start_indices[1]:end_indices[1], start_indices[2]:end_indices[2]]
+    return cropped_matrix
+
 def raw2hdf5(tag : str, subtag : str, sublist : list[str], hdf5_file : h5py._hl.files.File) -> None:
     group = hdf5_file.create_group(subtag)
     for index, subject_path in enumerate(tqdm(sublist, desc=''.join([tag,'_',subtag]), leave=True)):
@@ -67,8 +77,13 @@ def raw2hdf5(tag : str, subtag : str, sublist : list[str], hdf5_file : h5py._hl.
         [head, data_t1ce ] = read_nii_head_and_data(file_path=find_first_match(substr=''.join(['_', 't1ce' ,'.']), str_list=all_files))
         [head, data_t2   ] = read_nii_head_and_data(file_path=find_first_match(substr=''.join(['_', 't2'   ,'.']), str_list=all_files))
         [head, data_seg  ] = read_nii_head_and_data(file_path=find_first_match(substr=''.join(['_', 'seg'  ,'.']), str_list=all_files))
-        data = np.array([data_flair, data_t1, data_t1ce, data_t2, data_seg])
-        hdf5_data = group.create_dataset(str(index), data.shape, dtype=data.dtype)
+        data_flair = crop_nparray(data_flair)
+        data_t1    = crop_nparray(data_t1)
+        data_t1ce  = crop_nparray(data_t1ce)
+        data_t2    = crop_nparray(data_t2)
+        data_seg   = crop_nparray(data_seg)
+        data       = np.array([data_flair, data_t1, data_t1ce, data_t2, data_seg])
+        hdf5_data  = group.create_dataset(str(index), data.shape, dtype=data.dtype)
         hdf5_data[:] = data
 
 for hdf5_path, subjects_list in zip(hdf5_path_list, [H_subjects_list, L_subjects_list]):
@@ -83,8 +98,3 @@ for hdf5_path, subjects_list in zip(hdf5_path_list, [H_subjects_list, L_subjects
                 raw2hdf5(tag=tag, subtag=subtag, sublist=sublist, hdf5_file=hdf5_file)
         end_time = time.time()
         print(f'It took {round((end_time-start_time)/60, 2)} minutes to write {hdf5_path}')
-    
-
-# 参考第一名方案组织数据和编写网络(GPT/Claude) 
-# https://github.com/black0017/MedicalZooPytorch    这个看看，工具库？
-# https://github.com/AghdamAmir/3D-Brain-Tumor-Segmentation-using-AutoEncoder-Regularization.git

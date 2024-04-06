@@ -1,14 +1,24 @@
 """
-
+Project for 2024 Spring Medical Image Analysis of UCAS
+Task: Segmentation of gliomas in pre-operative MRI scans
+     sub-regions considered for evaluation{
+        1: NCR(necrotic), NET(non-enhancing tumor)
+        2: ED(peritumoral edema)
+        4: ET(enhancing tumor)
+        0: else
+     }
 """
-import h5py
+
+import time
 import torch
+import numpy as np
 from torch.utils.data import DataLoader
 
 from model import NvNet
 from dataset import BraTSDataset
 from criteria import CombinedLoss
 from load_path import hdf5_path_list, config
+
 
 def setup_device() -> torch.device:
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -22,13 +32,19 @@ def main():
     # Hyperparameter
     hyperparameter = config['Hyperparameter']
     batch_size = hyperparameter['batch_size']
-    learning_rate = hyperparameter['learning_rate']
+    learning_rate = float(hyperparameter['learning_rate'])
+    original_learning_rate = learning_rate
     epoch = hyperparameter['epoch']
     # Data
     hgg_hdf5_path = [x for x in hdf5_path_list if 'HGG' in x][0]
-    dataloader = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='train'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    train_dataloader = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='train'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    valid_dataloader = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='valid'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    test_dataloader  = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='test' ), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
     # Network
-    model = NvNet(inChans=4, input_shape=(160,192,128), seg_outChans=3, activation='relu', normalizaiton='group_normalization', VAE_enable=True, mode='trilinear')
+    seg_outChans = config['Model']['seg_outChans']
+    assert seg_outChans == 3, 'seg_outChans must be 3'
+    input_shape = next(iter(train_dataloader))[0].shape[-seg_outChans:]
+    model = NvNet(inChans=4, input_shape=input_shape, seg_outChans=seg_outChans, activation='relu', normalizaiton='group_normalization', VAE_enable=True, mode='trilinear')
 
     trainable_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f'The number of trainable parametes is {trainable_parameters}.')
@@ -39,56 +55,65 @@ def main():
     # Optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate) 
 
-    for epoch in range(epoch):
-
-        # Train Model
-        print('\n\n\nEpoch: {}\n Train'.format(epoch))
+    # Train and Valid
+    # train and valid loss in each epoch
+    all_train_loss, all_valid_loss = [], []
+    for ep in range(epoch):
+        start_time = time.time()
+        # train
         model.train()
-        loss = 0
-        learning_rate = learning_rate * (0.5 ** (epoch // 4))
-        # for param_group in optimizer.param_groups:
-        #     param_group["lr"] = learning_rate
-        # torch.set_grad_enabled(True)
-        for idx, (img, label) in enumerate(dataloader):
-            print(img.shape, label.shape)
-            
+        train_loss = []
+        learning_rate = original_learning_rate*((1-ep/epoch)**0.9)
+        for param_group in optimizer.param_groups:
+            param_group['lr'] = learning_rate
+        torch.set_grad_enabled(True)
+        for img, label in train_dataloader:
             img, label = img.to(device), label.to(device)
             pred = model(img)
-            print(pred.shape)
-            exit(0)
-
-            seg_outChans=3
             seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
-            batch_loss = criterion(seg_y_pred, label, rec_y_pred, img, y_mid)
+            loss = criterion(seg_y_pred, label, rec_y_pred, img, y_mid)
+            train_loss.append(loss.item())
+            # 3 steps of back propagation
             optimizer.zero_grad()
-            batch_loss.backward()
+            loss.backward()
             optimizer.step()
-            loss += float(batch_loss)
-        log_msg = '\n'.join(['Epoch: %d  Loss: %.5f' %(epoch, loss/(idx+1))])
-        print(log_msg)
+        
+        # valid
+        model.eval()
+        valid_loss = []
+        with torch.no_grad():
+            for img, label in valid_dataloader:
+                img, label = img.to(device), label.to(device)
+                pred = model(img)
+                seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
+                loss = criterion(seg_y_pred, label, rec_y_pred, img, y_mid)
+                valid_loss.append(loss.item())
+                
+        all_train_loss.append(round(np.mean(train_loss),6))
+        all_valid_loss.append(round(np.mean(valid_loss),6))
+        end_time = time.time()
+        print(f'Epoch: {ep}. Train Loss = {all_train_loss[ep]}. Valid Loss = {all_valid_loss[ep]}. Minutes: {round((end_time-start_time)/60, 3)}')
+    
+    assert len(all_train_loss) == len(all_valid_loss)
+
+    # Test
+    criterion = CombinedLoss(k1=0, k2=0) # when k1=k2=0, the result of criterion = 1-dice
+    model.eval()
+    diec = []
+    with torch.no_grad():
+        for img, label in test_dataloader:
+            img, label = img.to(device), label.to(device)
+            pred = model(img)
+            seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
+            loss = criterion(seg_y_pred, label, rec_y_pred, img, y_mid)
+            loss = np.mean(loss.item())
+            diec.append(1.0-loss)
+    diec = sum(diec)/len(diec)
+    print(f'Diec = {diec}')
+            
 
 
-        # # Validate Model
-        # print('\n\n Validation')
-        # net.eval()
-        # for module in net.modules():
-        #     if isinstance(module, torch.nn.modules.Dropout2d):
-        #         module.train(True)
-        #     elif isinstance(module, torch.nn.modules.Dropout):
-        #         module.train(True)
-        #     else:
-        #         pass
-        # loss = 0
-        # torch.set_grad_enabled(False)
-        # for idx, (img, label) in enumerate(val_loader):
-        #   if torch.cuda.is_available():
-        #     img, label = img.cuda(), label.cuda()
-        #     pred = net(img)
-        #     seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
-        #     batch_loss = criterion(seg_y_pred, label, rec_y_pred, img, y_mid)
-        #     loss += float(batch_loss)
-        # log_msg = '\n'.join(['Epoch: %d  Loss: %.5f' %(epoch, loss/(idx+1))])
-        # print(log_msg)
+       
 
 if __name__ == '__main__':
     main()
