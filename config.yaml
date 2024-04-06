@@ -1,0 +1,8 @@
+Hyperparameter:
+  batch_size: 1
+  learning_rate: 0.001
+  epoch: 100
+
+Type:
+  H: HGG
+  L: LGG
