@@ -43,7 +43,7 @@ from load_path import hdf5_path_list, H_subjects_list, L_subjects_list
 # filters and returns a list of strings from 'str_list' that contain the substring 'substr'
 find_first_match = lambda substr, str_list: [x for x in str_list if substr in x][0]
 # Loads the header and data array of a NIfTI file specified by 'file_path' using nibabel.
-read_nii_head_and_data = lambda file_path: [nib.load(file_path).header, nib.load(file_path).get_fdata().astype(np.float32)]
+read_nii_head_and_data = lambda file_path: [nib.load(file_path).header, nib.load(file_path).get_fdata().astype(np.int16)]
 
 
 # TODO 暂且没弄数据增强 先看结果
