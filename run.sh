@@ -13,7 +13,7 @@ module load cuda/11.8
 source activate brats
 
 # Create a state file to control the collection process
-STATE_FILE="state_${BATCH_JOB_ID}"
+STATE_FILE="state_${BATCH_JOB_ID}.log"
 /usr/bin/touch ${STATE_FILE}
 
 # Collect GPU data in the background, one sample per second

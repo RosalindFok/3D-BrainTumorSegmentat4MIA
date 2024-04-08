@@ -1,11 +1,11 @@
 Hyperparameter:
   batch_size: 1
   learning_rate: 1e-4
-  epoch: 300
+  epoch: 10 # 300
 
 Type:
   H: HGG
   L: LGG
 
 Model:
-  seg_outChans: 3
+  seg_outChans: 1
