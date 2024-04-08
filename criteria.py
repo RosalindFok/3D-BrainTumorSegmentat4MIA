@@ -69,3 +69,16 @@ class CombinedLoss(_Loss):
         kl_div = self.kl_loss(est_mean, est_std)
         combined_loss = dice_loss + self.k1 * l2_loss + self.k2 * kl_div
         return combined_loss
+
+class Hausdorff_Distance(_Loss):
+    '''
+    Hausdorff_Distance = max(h(A,B), h(B,A)); h(A,B) = max_(a in A){min_(b in B){||a-b||}}; ||a-b|| is the Euclidean distance
+    '''
+    def __init__(self, *args, **kwargs):
+        super(Hausdorff_Distance, self).__init__()
+
+    def forward(self, y_pred, y_true):
+        dist1 = torch.cdist(y_pred.view(-1, y_pred.size(-1)), y_true.view(-1, y_true.size(-1))).max(dim=1)[0].max()
+        dist2 = torch.cdist(y_true.view(-1, y_true.size(-1)), y_pred.view(-1, y_pred.size(-1))).max(dim=1)[0].max()
+        hausdorff_distance = torch.max(dist1, dist2)
+        return hausdorff_distance

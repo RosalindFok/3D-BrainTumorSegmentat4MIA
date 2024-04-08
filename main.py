@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader
 
 from model import NvNet
 from dataset import BraTSDataset
-from criteria import CombinedLoss
+from criteria import CombinedLoss, Hausdorff_Distance
 from load_path import hdf5_path_list, config
 
 
@@ -50,9 +50,10 @@ def main():
     print(f'The number of trainable parametes is {trainable_parameters}.')
     model = model.to(device=device)
     print(model)
-    # Loss Function
+    # Loss and Metric
     criterion = CombinedLoss(k1=0.1, k2=0.1, type='WT')
     get_dice  = CombinedLoss(k1=0, k2=0, type='WT') # when k1=k2=0, the result of CombinedLoss = 1-dice
+    hausdorff_distance = Hausdorff_Distance()
     # Optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate) 
 
@@ -107,7 +108,7 @@ def main():
 
     # Test
     model.eval()
-    test_dice = []
+    test_dice, test_hausdorff_distance = [], []
     with torch.no_grad():
         for img, label in test_dataloader:
             img, label = img.to(device), label.to(device)
@@ -115,7 +116,9 @@ def main():
             seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
             dice_loss = get_dice(seg_y_pred, label, rec_y_pred, img, y_mid)
             test_dice.append(1.0-dice_loss.item())
-    print(f'dice = {round(np.mean(test_dice), 6)}')
+            hausdorff_distance = hausdorff_distance(seg_y_pred, label)
+            test_hausdorff_distance.append(hausdorff_distance.item())
+    print(f'Dice = {round(np.mean(test_dice), 6)}, Hausdorff = {round(np.mean(test_hausdorff_distance), 6)}')
 
 if __name__ == '__main__':
     main()
