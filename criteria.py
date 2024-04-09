@@ -41,16 +41,17 @@ class CombinedLoss(_Loss):
     TC: tumor core(2,4)
     ET: enhancing tumor(4)
     '''
-    def __init__(self, k1=0.1, k2=0.1, type : str = None):
+    def __init__(self, k1=0.1, k2=0.1, tumor_type : str = None):
         super(CombinedLoss, self).__init__()
         self.k1 = k1
         self.k2 = k2
         self.dice_loss = SoftDiceLoss()
         self.l2_loss = nn.MSELoss()
         self.kl_loss = CustomKLLoss()
-        self.type = type if not type is None else 'WT'
+        self.type = tumor_type if not tumor_type is None else 'WT'
 
     def forward(self, seg_y_pred, seg_y_true, rec_y_pred, rec_y_true, y_mid):
+        # Map segmentation labels to binary labels
         if self.type == 'WT':
             threshold = 1
         elif self.type == 'TC':
@@ -59,9 +60,7 @@ class CombinedLoss(_Loss):
             threshold = 4
         else:
             raise ValueError('Invalid type')
-            exit(1)
         seg_y_true = torch.where(seg_y_true >= threshold, torch.tensor(1.0, dtype=torch.float32), torch.tensor(0.0, dtype=torch.float32))
-        rec_y_true = torch.where(rec_y_true >= threshold, torch.tensor(1.0, dtype=torch.float32), torch.tensor(0.0, dtype=torch.float32))
 
         est_mean, est_std = (y_mid[:, :128], y_mid[:, 128:])
         dice_loss = self.dice_loss(seg_y_pred, seg_y_true)

@@ -1,7 +1,7 @@
 Hyperparameter:
   batch_size: 1
   learning_rate: 1e-4
-  epoch: 10 # 300
+  epoch: 300
 
 Type:
   H: HGG
@@ -9,3 +9,4 @@ Type:
 
 Model:
   seg_outChans: 1
+  tumor_type: WT # WT TC ET

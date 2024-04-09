@@ -2,7 +2,6 @@
 2024 Spring Medical Image Analysis of UCAS
 
 ## Environment
-
 ```shell 
 conda create --name brats python=3.11
 source activate brats

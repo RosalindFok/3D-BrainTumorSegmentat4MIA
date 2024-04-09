@@ -42,8 +42,8 @@ def main():
     test_dataloader  = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='test' ), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
     # Network
     seg_outChans = config['Model']['seg_outChans']
-    # assert seg_outChans == 3, 'seg_outChans must be 3'
-    input_shape = next(iter(train_dataloader))[0].shape[-3:]
+    tumor_type   = config['Model']['tumor_type']
+    input_shape  = next(iter(train_dataloader))[0].shape[-3:]
     model = NvNet(inChans=4, input_shape=input_shape, seg_outChans=seg_outChans, activation='relu', normalizaiton='group_normalization', VAE_enable=True, mode='trilinear')
 
     trainable_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
@@ -51,9 +51,9 @@ def main():
     model = model.to(device=device)
     print(model)
     # Loss and Metric
-    criterion = CombinedLoss(k1=0.1, k2=0.1, type='WT')
-    get_dice  = CombinedLoss(k1=0, k2=0, type='WT') # when k1=k2=0, the result of CombinedLoss = 1-dice
-    hausdorff_distance = Hausdorff_Distance()
+    criterion = CombinedLoss(k1=0.1, k2=0.1, tumor_type=tumor_type)
+    get_dice  = CombinedLoss(k1=0, k2=0, tumor_type=tumor_type) # when k1=k2=0, the result of CombinedLoss = 1-dice
+    get_hausdorff_distance = Hausdorff_Distance()
     # Optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate) 
 
@@ -116,8 +116,8 @@ def main():
             seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
             dice_loss = get_dice(seg_y_pred, label, rec_y_pred, img, y_mid)
             test_dice.append(1.0-dice_loss.item())
-            hausdorff_distance = hausdorff_distance(seg_y_pred, label)
-            test_hausdorff_distance.append(hausdorff_distance.item())
+            hausdorff = get_hausdorff_distance(seg_y_pred, label)
+            test_hausdorff_distance.append(hausdorff.item())
     print(f'Dice = {round(np.mean(test_dice), 6)}, Hausdorff = {round(np.mean(test_hausdorff_distance), 6)}')
 
 if __name__ == '__main__':
