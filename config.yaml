@@ -9,4 +9,4 @@ Type:
 
 Model:
   seg_outChans: 1
-  tumor_type: WT # WT TC ET
+  tumor_type: WT # WT(whole tumor) TC(tumor core) ET(enhancing tumor)

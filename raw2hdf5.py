@@ -66,6 +66,16 @@ def crop_nparray(original_matrix : np.ndarray, target_shape : tuple = (160, 192,
     cropped_matrix = original_matrix[start_indices[0]:end_indices[0], start_indices[1]:end_indices[1], start_indices[2]:end_indices[2]]
     return cropped_matrix
 
+def min_max_normalize(data : np.ndarray) -> np.ndarray:
+    '''
+    Normalize the data to the range of [0, 1] using min-max normalization.
+    '''
+    data_min = np.min(data)
+    data_max = np.max(data)
+    data_norm = (data - data_min) / (data_max - data_min) if data_max !=  data_min else np.ones_like(data)
+    return data_norm
+
+
 def raw2hdf5(tag : str, subtag : str, sublist : list[str], hdf5_file : h5py._hl.files.File) -> None:
     group = hdf5_file.create_group(subtag)
     for index, subject_path in enumerate(tqdm(sublist, desc=''.join([tag,'_',subtag]), leave=True)):
@@ -77,12 +87,15 @@ def raw2hdf5(tag : str, subtag : str, sublist : list[str], hdf5_file : h5py._hl.
         [head, data_t1ce ] = read_nii_head_and_data(file_path=find_first_match(substr=''.join(['_', 't1ce' ,'.']), str_list=all_files))
         [head, data_t2   ] = read_nii_head_and_data(file_path=find_first_match(substr=''.join(['_', 't2'   ,'.']), str_list=all_files))
         [head, data_seg  ] = read_nii_head_and_data(file_path=find_first_match(substr=''.join(['_', 'seg'  ,'.']), str_list=all_files))
-        data_flair = crop_nparray(data_flair)
-        data_t1    = crop_nparray(data_t1)
-        data_t1ce  = crop_nparray(data_t1ce)
-        data_t2    = crop_nparray(data_t2)
+        # Input Matrix
+        data_flair = min_max_normalize(crop_nparray(data_flair))
+        data_t1    = min_max_normalize(crop_nparray(data_t1))
+        data_t1ce  = min_max_normalize(crop_nparray(data_t1ce))
+        data_t2    = min_max_normalize(crop_nparray(data_t2))
+        # Output Target Matrix
         data_seg   = crop_nparray(data_seg)
-        data       = np.array([data_flair, data_t1, data_t1ce, data_t2, data_seg])
+        # Concatenate Input and Output Target Matrices and save as hdf5 
+        data       = np.array([data_flair, data_t1, data_t1ce, data_t2, data_seg], dtype=np.float16)
         hdf5_data  = group.create_dataset(str(index), data.shape, dtype=data.dtype)
         hdf5_data[:] = data
 
