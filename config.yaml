@@ -9,4 +9,5 @@ Type:
 
 Model:
   seg_outChans: 1
+  dataset : LGG # HGG, LGG
   tumor_type: WT # WT(whole tumor) TC(tumor core) ET(enhancing tumor)

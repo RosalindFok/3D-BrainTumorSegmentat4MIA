@@ -36,10 +36,12 @@ def main():
     original_learning_rate = learning_rate
     epoch = hyperparameter['epoch']
     # Data
-    hgg_hdf5_path = [x for x in hdf5_path_list if 'HGG' in x][0]
-    train_dataloader = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='train'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
-    valid_dataloader = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='valid'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
-    test_dataloader  = DataLoader(BraTSDataset(hdf5_path=hgg_hdf5_path, tag='test' ), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    dataset_name = config['Model']['dataset']
+    assert dataset_name == 'HGG' or dataset_name == 'LGG', 'Dataset name must be HGG or LGG.'
+    hdf5_path = [x for x in hdf5_path_list if dataset_name in x][0]
+    train_dataloader = DataLoader(BraTSDataset(hdf5_path=hdf5_path, tag='train'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    valid_dataloader = DataLoader(BraTSDataset(hdf5_path=hdf5_path, tag='valid'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    test_dataloader  = DataLoader(BraTSDataset(hdf5_path=hdf5_path, tag='test' ), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
     # Network
     seg_outChans = config['Model']['seg_outChans']
     tumor_type   = config['Model']['tumor_type']
