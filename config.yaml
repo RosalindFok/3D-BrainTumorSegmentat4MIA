@@ -6,8 +6,6 @@ Hyperparameter:
 Type:
   task: train # predict, train. predict is for inference only; train is for training and testing the model.
   save_tag: Null
-  H: HGG
-  L: LGG
 
 Model:
   seg_outChans: 1
