@@ -15,6 +15,8 @@ LGG_path = os.path.join(MICCAI_BraTS_2018_Data_Training_path, 'LGG')
 H_subjects_list = [os.path.join(HGG_path, x) for x in os.listdir(HGG_path)]
 L_subjects_list = [os.path.join(LGG_path, x) for x in os.listdir(LGG_path)]
 hdf5_path_list = [os.path.join('..', ''.join([YEAR,'_',tag,'.hdf5'])) for tag in ['HGG', 'LGG']]
+save_npz_path = os.path.join('..', 'saved_npz')
+if not os.path.exists(save_npz_path): os.makedirs(save_npz_path)
 
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
