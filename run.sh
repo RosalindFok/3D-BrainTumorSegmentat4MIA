@@ -27,6 +27,7 @@ function gpus_collection() {
 gpus_collection &
 
 # Execute the example script
+python raw2hdf5.py
 python main.py
 
 # Stop the GPU collection process

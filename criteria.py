@@ -1,7 +1,8 @@
 import torch
+import numpy as np
 from torch import nn
 from torch.nn.modules.loss import _Loss
-
+from scipy.spatial.distance import directed_hausdorff
 
 class SoftDiceLoss(_Loss):
     '''
@@ -41,27 +42,15 @@ class CombinedLoss(_Loss):
     TC: tumor core(2,4)
     ET: enhancing tumor(4)
     '''
-    def __init__(self, k1=0.1, k2=0.1, tumor_type : str = None):
+    def __init__(self, k1=0.1, k2=0.1):
         super(CombinedLoss, self).__init__()
         self.k1 = k1
         self.k2 = k2
         self.dice_loss = SoftDiceLoss()
         self.l2_loss = nn.MSELoss()
         self.kl_loss = CustomKLLoss()
-        self.type = tumor_type if not tumor_type is None else 'WT'
 
     def forward(self, seg_y_pred, seg_y_true, rec_y_pred, rec_y_true, y_mid):
-        # Map segmentation labels to binary labels
-        if self.type == 'WT':
-            threshold = 1
-        elif self.type == 'TC':
-            threshold = 2
-        elif self.type == 'ET':
-            threshold = 4
-        else:
-            raise ValueError('Invalid type')
-        seg_y_true = torch.where(seg_y_true >= threshold, torch.tensor(1.0, dtype=torch.float32), torch.tensor(0.0, dtype=torch.float32))
-
         est_mean, est_std = (y_mid[:, :128], y_mid[:, 128:])
         dice_loss = self.dice_loss(seg_y_pred, seg_y_true)
         l2_loss = self.l2_loss(rec_y_pred, rec_y_true)
@@ -77,7 +66,14 @@ class Hausdorff_Distance(_Loss):
         super(Hausdorff_Distance, self).__init__()
 
     def forward(self, y_pred, y_true):
-        dist1 = torch.cdist(y_pred.view(-1, y_pred.size(-1)), y_true.view(-1, y_true.size(-1))).max(dim=1)[0].max()
-        dist2 = torch.cdist(y_true.view(-1, y_true.size(-1)), y_pred.view(-1, y_pred.size(-1))).max(dim=1)[0].max()
-        hausdorff_distance = torch.max(dist1, dist2)
-        return hausdorff_distance
+        y_pred = y_pred.squeeze().detach().cpu().numpy()
+        y_true = y_true.squeeze().detach().cpu().numpy()
+        hausdorff_distance = []
+        for set1, set2 in zip(y_pred, y_true):
+            # 计算从set1到set2的Hausdorff距离
+            u_hausdorff = directed_hausdorff(set1, set2)[0]
+            # 计算从set2到set1的Hausdorff距离
+            v_hausdorff = directed_hausdorff(set2, set1)[0]
+            # Hausdorff距离是这两个值中的最大值
+            hausdorff_distance.append(max(u_hausdorff, v_hausdorff))
+        return np.mean(hausdorff_distance)

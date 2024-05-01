@@ -27,6 +27,20 @@ def setup_device() -> torch.device:
     torch.cuda.init() if torch.cuda.is_available() else None
     return device
 
+def change_label_with_tumor_type(label : torch.Tensor, tumor_type : str) -> torch.Tensor:
+    # Map segmentation labels to binary labels
+    if tumor_type == 'WT':
+        threshold = 1
+    elif tumor_type == 'TC':
+        threshold = 2
+    elif tumor_type == 'ET':
+        threshold = 4
+    else:
+        raise ValueError('Invalid type')
+    label = torch.where(label >= threshold, torch.tensor(1.0, dtype=torch.float32), torch.tensor(0.0, dtype=torch.float32))
+    return label
+
+
 def main():
     # Device
     device = setup_device()
@@ -46,33 +60,33 @@ def main():
     # Network
     seg_outChans = config['Model']['seg_outChans']
     tumor_type   = config['Model']['tumor_type']
+    VAE_enable   = config['Model']['VAE_enable']
     input_shape  = next(iter(train_dataloader))[0].shape[-3:]
-    model = NvNet(inChans=4, input_shape=input_shape, seg_outChans=seg_outChans, activation='relu', normalizaiton='group_normalization', VAE_enable=True, mode='trilinear')
+    model = NvNet(inChans=4, input_shape=input_shape, seg_outChans=seg_outChans, activation='relu', normalizaiton='group_normalization', VAE_enable=VAE_enable, mode='trilinear')
 
     trainable_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f'The number of trainable parametes is {trainable_parameters}.')
     model = model.to(device=device)
     print(model)
     # Loss and Metric
-    criterion = CombinedLoss(k1=0.1, k2=0.1, tumor_type=tumor_type)
-    get_dice  = CombinedLoss(k1=0, k2=0, tumor_type=tumor_type) # when k1=k2=0, the result of CombinedLoss = 1-dice
+    criterion = CombinedLoss(k1=0.1, k2=0.1)
+    get_dice  = CombinedLoss(k1=0, k2=0) # when k1=k2=0, the result of CombinedLoss = 1-dice
     get_hausdorff_distance = Hausdorff_Distance()
     # Optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate) 
 
     def train_valid(model : torch.nn.Module) -> torch.nn.Module:
-        all_train_loss, all_valid_loss = [], []
-        all_train_dice, all_valid_dice = [], []
         for ep in range(epoch):
             start_time = time.time()
             # train
             model.train()
-            train_loss, train_dice = [], []
+            train_loss, train_dice, train_hausdorff_distance = [], [], []
             learning_rate = original_learning_rate*((1-ep/epoch)**0.9)
             for param_group in optimizer.param_groups:
                 param_group['lr'] = learning_rate
             torch.set_grad_enabled(True)
             for img, label in train_dataloader:
+                label = change_label_with_tumor_type(label, tumor_type)
                 img, label = img.to(device), label.to(device)
                 pred = model(img)
                 seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
@@ -80,6 +94,7 @@ def main():
                 train_loss.append(loss.item())
                 dice_loss = get_dice(seg_y_pred, label, rec_y_pred, img, y_mid)
                 train_dice.append(1-dice_loss.item())
+                train_hausdorff_distance.append(get_hausdorff_distance(seg_y_pred, label).item())
                 # 3 steps of back propagation
                 optimizer.zero_grad()
                 loss.backward()
@@ -87,9 +102,10 @@ def main():
 
             # valid
             model.eval()
-            valid_loss, valid_dice = [], []
+            valid_loss, valid_dice, valid_hausdorff_distance = [], [], []
             with torch.no_grad():
                 for img, label in valid_dataloader:
+                    label = change_label_with_tumor_type(label, tumor_type)
                     img, label = img.to(device), label.to(device)
                     pred = model(img)
                     seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
@@ -97,22 +113,23 @@ def main():
                     valid_loss.append(loss.item())
                     dice_loss = get_dice(seg_y_pred, label, rec_y_pred, img, y_mid)
                     valid_dice.append(1-dice_loss.item())
+                    valid_hausdorff_distance.append(get_hausdorff_distance(seg_y_pred, label).item())
 
-            all_train_loss.append(round(np.mean(train_loss),6))
-            all_valid_loss.append(round(np.mean(valid_loss),6))
-            all_train_dice.append(round(np.mean(train_dice),6))
-            all_valid_dice.append(round(np.mean(valid_dice),6))
             end_time = time.time()
-            print(f'Epoch: {ep}. Train Loss={all_train_loss[ep]}. Valid Loss={all_valid_loss[ep]}. Train dice={all_train_dice[ep]}. Valid dice={all_valid_dice[ep]}. Minutes: {round((end_time-start_time)/60, 3)}')
-        assert len(all_train_loss) == len(all_valid_loss) == len(all_train_dice) == len(all_valid_dice)
+            print(f'Epoch: {ep}.    Minutes: {round((end_time-start_time)/60, 3)}')
+            print(f'Train Loss={round(np.mean(train_loss),6)}.\tValid Loss={round(np.mean(valid_loss),6)}')
+            print(f'Train Dice={round(np.mean(train_dice),6)}.\tValid Dice={round(np.mean(valid_dice),6)}')
+            print(f'Train Hausdorff={round(np.mean(train_hausdorff_distance),6)}.\tValid Hausdorff={round(np.mean(valid_hausdorff_distance),6)}')
         return model
     
     def test(model : torch.nn.Module) -> dict[float, float]:
         start_time = time.time()
+        # test
         model.eval()
         test_dice, test_hausdorff_distance = [], []
         with torch.no_grad():
             for idx, (img, label) in enumerate(test_dataloader):
+                label = change_label_with_tumor_type(label, tumor_type)
                 img, label = img.to(device), label.to(device)
                 pred = model(img)
                 seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]

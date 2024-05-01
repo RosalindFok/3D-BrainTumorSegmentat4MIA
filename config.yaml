@@ -9,5 +9,6 @@ Type:
 
 Model:
   seg_outChans: 1
-  dataset : HGG # HGG, LGG
-  tumor_type: WT # WT(whole tumor) TC(tumor core) ET(enhancing tumor)
+  dataset: HGG # HGG, LGG
+  tumor_type: ET # WT(whole tumor) TC(tumor core) ET(enhancing tumor)
+  VAE_enable: True # True, False

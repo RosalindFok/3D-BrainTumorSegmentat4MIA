@@ -293,7 +293,7 @@ class NvNet(nn.Module):
         
         if self.VAE_enable:
             out_vae, out_distr = self.vae(out_en3)
-            out_final = torch.cat((out_end, out_vae), 1)
+            out_final = torch.cat((out_end, out_vae), 1) # out_end : seg, out_vae : rec
             return out_final, out_distr
         
         return out_end

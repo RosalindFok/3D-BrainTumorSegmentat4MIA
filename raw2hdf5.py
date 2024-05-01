@@ -46,8 +46,6 @@ find_first_match = lambda substr, str_list: [x for x in str_list if substr in x]
 read_nii_head_and_data = lambda file_path: [nib.load(file_path).header, nib.load(file_path).get_fdata().astype(np.int16)]
 
 
-# TODO 暂且没弄数据增强 先看结果
-
 def crop_nparray(original_matrix : np.ndarray, target_shape : tuple = (160, 192, 128)) -> np.ndarray:
     """Crop the center part of the original matrix to the target shape.
 
@@ -67,9 +65,9 @@ def crop_nparray(original_matrix : np.ndarray, target_shape : tuple = (160, 192,
     return cropped_matrix
 
 def min_max_normalize(data : np.ndarray) -> np.ndarray:
-    '''
+    """
     Normalize the data to the range of [0, 1] using min-max normalization.
-    '''
+    """
     data_min = np.min(data)
     data_max = np.max(data)
     data_norm = (data - data_min) / (data_max - data_min) if data_max !=  data_min else np.ones_like(data)
@@ -100,10 +98,12 @@ def raw2hdf5(tag : str, subtag : str, sublist : list[str], hdf5_file : h5py._hl.
         hdf5_data[:] = data
 
 for hdf5_path, subjects_list in zip(hdf5_path_list, [H_subjects_list, L_subjects_list]):
-    tag = re.search(r'_(.*?)\.', hdf5_path).group(1) # HGG LGG
+    tag = re.search(r'(.*?)\.hdf5', hdf5_path).group(1)[-3:] # HGG LGG
+
     train_list = subjects_list[len(subjects_list)//7*0 : len(subjects_list)//7*5]
     valid_list = subjects_list[len(subjects_list)//7*5 : len(subjects_list)//7*6]
     test_list  = subjects_list[len(subjects_list)//7*6 : len(subjects_list)//7*7]
+
     if not os.path.exists(path=hdf5_path):
         start_time = time.time()
         with h5py.File(name=hdf5_path, mode='w') as hdf5_file:
