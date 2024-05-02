@@ -1,0 +1,1388 @@
+Device = NVIDIA A100-PCIE-40GB
+
+The number of trainable parametes is 40055541.
+NvNet(
+  (in_conv0): DownSampling(
+    (conv1): Conv3d(4, 32, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), bias=False)
+    (dropout): Dropout3d(p=0.2, inplace=True)
+  )
+  (en_block0): EncoderBlock(
+    (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(32, 32, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(32, 32, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_down1): DownSampling(
+    (conv1): Conv3d(32, 64, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=(1, 1, 1), bias=False)
+  )
+  (en_block1_0): EncoderBlock(
+    (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_block1_1): EncoderBlock(
+    (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_down2): DownSampling(
+    (conv1): Conv3d(64, 128, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=(1, 1, 1), bias=False)
+  )
+  (en_block2_0): EncoderBlock(
+    (norm1): GroupNorm(8, 128, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 128, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_block2_1): EncoderBlock(
+    (norm1): GroupNorm(8, 128, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 128, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_down3): DownSampling(
+    (conv1): Conv3d(128, 256, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=(1, 1, 1), bias=False)
+  )
+  (en_block3_0): EncoderBlock(
+    (norm1): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_block3_1): EncoderBlock(
+    (norm1): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_block3_2): EncoderBlock(
+    (norm1): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (en_block3_3): EncoderBlock(
+    (norm1): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 256, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (de_up2): LinearUpSampling(
+    (conv1): Conv3d(256, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (conv2): Conv3d(256, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+  )
+  (de_block2): DecoderBlock(
+    (norm1): GroupNorm(8, 128, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 128, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (de_up1): LinearUpSampling(
+    (conv1): Conv3d(128, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (conv2): Conv3d(128, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+  )
+  (de_block1): DecoderBlock(
+    (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (de_up0): LinearUpSampling(
+    (conv1): Conv3d(64, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (conv2): Conv3d(64, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+  )
+  (de_block0): DecoderBlock(
+    (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+    (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+    (actv1): ReLU(inplace=True)
+    (actv2): ReLU(inplace=True)
+    (conv1): Conv3d(32, 32, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+    (conv2): Conv3d(32, 32, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  )
+  (de_end): OutputTransition(
+    (conv1): Conv3d(32, 1, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+  )
+  (vae): VAE(
+    (vd_resample): VDResampling(
+      (gn1): GroupNorm(8, 256, eps=1e-05, affine=True)
+      (actv1): ReLU(inplace=True)
+      (actv2): ReLU(inplace=True)
+      (conv1): Conv3d(256, 16, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=(1, 1, 1))
+      (dense1): Linear(in_features=15360, out_features=256, bias=True)
+      (dense2): Linear(in_features=128, out_features=122880, bias=True)
+      (up0): LinearUpSampling(
+        (conv1): Conv3d(128, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (conv2): Conv3d(128, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+      )
+    )
+    (vd_block2): VDecoderBlock(
+      (up0): LinearUpSampling(
+        (conv1): Conv3d(256, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (conv2): Conv3d(256, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+      )
+      (block): DecoderBlock(
+        (norm1): GroupNorm(8, 128, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 128, eps=1e-05, affine=True)
+        (actv1): ReLU(inplace=True)
+        (actv2): ReLU(inplace=True)
+        (conv1): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (conv2): Conv3d(128, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      )
+    )
+    (vd_block1): VDecoderBlock(
+      (up0): LinearUpSampling(
+        (conv1): Conv3d(128, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (conv2): Conv3d(128, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+      )
+      (block): DecoderBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (actv1): ReLU(inplace=True)
+        (actv2): ReLU(inplace=True)
+        (conv1): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (conv2): Conv3d(64, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      )
+    )
+    (vd_block0): VDecoderBlock(
+      (up0): LinearUpSampling(
+        (conv1): Conv3d(64, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (conv2): Conv3d(64, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+      )
+      (block): DecoderBlock(
+        (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (actv1): ReLU(inplace=True)
+        (actv2): ReLU(inplace=True)
+        (conv1): Conv3d(32, 32, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (conv2): Conv3d(32, 32, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      )
+    )
+    (vd_end): Conv3d(32, 4, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+  )
+)
+Epoch: 0.    Minutes: 1.472
+Train Loss=1.003389.	Valid Loss=0.979703
+Train Dice=0.029049.	Valid Dice=0.025172
+Train Hausdorff=4.196036.	Valid Hausdorff=2.563526
+Epoch: 1.    Minutes: 1.456
+Train Loss=0.951796.	Valid Loss=1.003043
+Train Dice=0.052351.	Valid Dice=4.4e-05
+Train Hausdorff=1.401151.	Valid Hausdorff=0.431299
+Epoch: 2.    Minutes: 1.466
+Train Loss=1.002562.	Valid Loss=1.002364
+Train Dice=2.6e-05.	Valid Dice=2e-05
+Train Hausdorff=0.63602.	Valid Hausdorff=0.412308
+Epoch: 3.    Minutes: 1.446
+Train Loss=1.002669.	Valid Loss=1.003193
+Train Dice=2.7e-05.	Valid Dice=2.3e-05
+Train Hausdorff=0.629558.	Valid Hausdorff=0.408972
+Epoch: 4.    Minutes: 1.482
+Train Loss=1.002326.	Valid Loss=1.001991
+Train Dice=2.7e-05.	Valid Dice=2.8e-05
+Train Hausdorff=0.628805.	Valid Hausdorff=0.406418
+Epoch: 5.    Minutes: 1.524
+Train Loss=1.001841.	Valid Loss=1.001917
+Train Dice=3.7e-05.	Valid Dice=3.5e-05
+Train Hausdorff=0.625468.	Valid Hausdorff=0.403735
+Epoch: 6.    Minutes: 1.495
+Train Loss=1.001866.	Valid Loss=1.001726
+Train Dice=4.5e-05.	Valid Dice=5e-05
+Train Hausdorff=0.623011.	Valid Hausdorff=0.401744
+Epoch: 7.    Minutes: 1.496
+Train Loss=1.00169.	Valid Loss=1.001601
+Train Dice=9.7e-05.	Valid Dice=0.000191
+Train Hausdorff=0.62835.	Valid Hausdorff=0.434136
+Epoch: 8.    Minutes: 1.456
+Train Loss=0.948916.	Valid Loss=0.900382
+Train Dice=0.053384.	Valid Dice=0.102693
+Train Hausdorff=1.746471.	Valid Hausdorff=1.480421
+Epoch: 9.    Minutes: 1.445
+Train Loss=0.852353.	Valid Loss=0.922115
+Train Dice=0.149771.	Valid Dice=0.079535
+Train Hausdorff=0.887579.	Valid Hausdorff=0.42316
+Epoch: 10.    Minutes: 1.45
+Train Loss=0.833983.	Valid Loss=0.872242
+Train Dice=0.167807.	Valid Dice=0.129613
+Train Hausdorff=1.027504.	Valid Hausdorff=1.3065
+Epoch: 11.    Minutes: 1.475
+Train Loss=0.800019.	Valid Loss=0.888341
+Train Dice=0.201657.	Valid Dice=0.114594
+Train Hausdorff=1.088082.	Valid Hausdorff=1.397902
+Epoch: 12.    Minutes: 1.497
+Train Loss=0.793712.	Valid Loss=0.859797
+Train Dice=0.208039.	Valid Dice=0.141856
+Train Hausdorff=0.763928.	Valid Hausdorff=1.24733
+Epoch: 13.    Minutes: 1.413
+Train Loss=0.844764.	Valid Loss=0.912604
+Train Dice=0.156958.	Valid Dice=0.089811
+Train Hausdorff=1.000627.	Valid Hausdorff=1.795832
+Epoch: 14.    Minutes: 1.399
+Train Loss=0.775713.	Valid Loss=0.913993
+Train Dice=0.226348.	Valid Dice=0.087566
+Train Hausdorff=0.977949.	Valid Hausdorff=1.966893
+Epoch: 15.    Minutes: 1.396
+Train Loss=0.763434.	Valid Loss=0.835391
+Train Dice=0.238084.	Valid Dice=0.166226
+Train Hausdorff=0.845032.	Valid Hausdorff=1.070941
+Epoch: 16.    Minutes: 1.407
+Train Loss=0.745954.	Valid Loss=0.887304
+Train Dice=0.255862.	Valid Dice=0.114268
+Train Hausdorff=0.9312.	Valid Hausdorff=1.655974
+Epoch: 17.    Minutes: 1.396
+Train Loss=0.739288.	Valid Loss=0.862233
+Train Dice=0.262116.	Valid Dice=0.139365
+Train Hausdorff=0.8502.	Valid Hausdorff=1.343839
+Epoch: 18.    Minutes: 1.408
+Train Loss=0.778901.	Valid Loss=0.823853
+Train Dice=0.222507.	Valid Dice=0.177655
+Train Hausdorff=0.904774.	Valid Hausdorff=0.95909
+Epoch: 19.    Minutes: 1.42
+Train Loss=0.730475.	Valid Loss=0.852715
+Train Dice=0.271092.	Valid Dice=0.14877
+Train Hausdorff=0.918721.	Valid Hausdorff=1.207512
+Epoch: 20.    Minutes: 1.403
+Train Loss=0.732095.	Valid Loss=0.866911
+Train Dice=0.26997.	Valid Dice=0.140979
+Train Hausdorff=0.902836.	Valid Hausdorff=1.223663
+Epoch: 21.    Minutes: 1.431
+Train Loss=0.740035.	Valid Loss=0.851658
+Train Dice=0.262917.	Valid Dice=0.149782
+Train Hausdorff=0.832177.	Valid Hausdorff=1.218476
+Epoch: 22.    Minutes: 1.444
+Train Loss=0.728683.	Valid Loss=0.832888
+Train Dice=0.272669.	Valid Dice=0.168434
+Train Hausdorff=0.86189.	Valid Hausdorff=1.085461
+Epoch: 23.    Minutes: 1.439
+Train Loss=0.713361.	Valid Loss=0.829674
+Train Dice=0.288237.	Valid Dice=0.17191
+Train Hausdorff=0.841498.	Valid Hausdorff=1.016952
+Epoch: 24.    Minutes: 1.452
+Train Loss=0.707355.	Valid Loss=0.792002
+Train Dice=0.294294.	Valid Dice=0.209399
+Train Hausdorff=0.82343.	Valid Hausdorff=0.712302
+Epoch: 25.    Minutes: 1.427
+Train Loss=0.705035.	Valid Loss=0.80703
+Train Dice=0.296625.	Valid Dice=0.194459
+Train Hausdorff=0.970067.	Valid Hausdorff=0.851475
+Epoch: 26.    Minutes: 1.433
+Train Loss=0.702224.	Valid Loss=0.812565
+Train Dice=0.300082.	Valid Dice=0.190062
+Train Hausdorff=0.903697.	Valid Hausdorff=0.815345
+Epoch: 27.    Minutes: 1.427
+Train Loss=0.705245.	Valid Loss=0.80904
+Train Dice=0.296696.	Valid Dice=0.192544
+Train Hausdorff=0.899633.	Valid Hausdorff=0.774032
+Epoch: 28.    Minutes: 1.423
+Train Loss=0.713165.	Valid Loss=0.805739
+Train Dice=0.288331.	Valid Dice=0.195638
+Train Hausdorff=0.918435.	Valid Hausdorff=0.820313
+Epoch: 29.    Minutes: 1.453
+Train Loss=0.687745.	Valid Loss=0.804892
+Train Dice=0.313947.	Valid Dice=0.19646
+Train Hausdorff=0.76236.	Valid Hausdorff=0.798393
+Epoch: 30.    Minutes: 1.463
+Train Loss=0.695291.	Valid Loss=0.842706
+Train Dice=0.306414.	Valid Dice=0.159676
+Train Hausdorff=0.758712.	Valid Hausdorff=0.997145
+Epoch: 31.    Minutes: 1.395
+Train Loss=0.691545.	Valid Loss=0.792557
+Train Dice=0.312101.	Valid Dice=0.209413
+Train Hausdorff=0.746657.	Valid Hausdorff=0.798902
+Epoch: 32.    Minutes: 1.384
+Train Loss=0.7031.	Valid Loss=0.792252
+Train Dice=0.299446.	Valid Dice=0.211953
+Train Hausdorff=0.77561.	Valid Hausdorff=0.68235
+Epoch: 33.    Minutes: 1.39
+Train Loss=0.703897.	Valid Loss=0.830769
+Train Dice=0.298657.	Valid Dice=0.171451
+Train Hausdorff=0.807228.	Valid Hausdorff=1.067962
+Epoch: 34.    Minutes: 1.389
+Train Loss=0.683967.	Valid Loss=0.861586
+Train Dice=0.318036.	Valid Dice=0.140138
+Train Hausdorff=0.72479.	Valid Hausdorff=1.266072
+Epoch: 35.    Minutes: 1.388
+Train Loss=0.740234.	Valid Loss=0.814811
+Train Dice=0.262223.	Valid Dice=0.189112
+Train Hausdorff=0.673069.	Valid Hausdorff=0.810502
+Epoch: 36.    Minutes: 1.39
+Train Loss=0.70737.	Valid Loss=0.855708
+Train Dice=0.294791.	Valid Dice=0.146496
+Train Hausdorff=0.924277.	Valid Hausdorff=1.187401
+Epoch: 37.    Minutes: 1.423
+Train Loss=0.719752.	Valid Loss=0.794084
+Train Dice=0.284015.	Valid Dice=0.2109
+Train Hausdorff=0.801386.	Valid Hausdorff=0.572029
+Epoch: 38.    Minutes: 1.432
+Train Loss=0.694707.	Valid Loss=0.862161
+Train Dice=0.309124.	Valid Dice=0.140485
+Train Hausdorff=0.781705.	Valid Hausdorff=1.309287
+Epoch: 39.    Minutes: 1.413
+Train Loss=0.700217.	Valid Loss=0.815906
+Train Dice=0.301463.	Valid Dice=0.185782
+Train Hausdorff=0.857083.	Valid Hausdorff=0.835341
+Epoch: 40.    Minutes: 1.463
+Train Loss=0.6599.	Valid Loss=0.807832
+Train Dice=0.342413.	Valid Dice=0.195525
+Train Hausdorff=0.748524.	Valid Hausdorff=0.910358
+Epoch: 41.    Minutes: 1.438
+Train Loss=0.673966.	Valid Loss=0.802077
+Train Dice=0.328155.	Valid Dice=0.199762
+Train Hausdorff=0.716636.	Valid Hausdorff=0.841582
+Epoch: 42.    Minutes: 1.447
+Train Loss=0.661862.	Valid Loss=0.808922
+Train Dice=0.339777.	Valid Dice=0.192461
+Train Hausdorff=0.72744.	Valid Hausdorff=0.693778
+Epoch: 43.    Minutes: 1.437
+Train Loss=0.64431.	Valid Loss=0.835686
+Train Dice=0.357221.	Valid Dice=0.16642
+Train Hausdorff=0.682604.	Valid Hausdorff=0.944761
+Epoch: 44.    Minutes: 1.434
+Train Loss=0.670009.	Valid Loss=0.80283
+Train Dice=0.33183.	Valid Dice=0.198809
+Train Hausdorff=0.733627.	Valid Hausdorff=0.679608
+Epoch: 45.    Minutes: 1.412
+Train Loss=0.663279.	Valid Loss=0.801332
+Train Dice=0.339031.	Valid Dice=0.201042
+Train Hausdorff=0.698305.	Valid Hausdorff=0.752087
+Epoch: 46.    Minutes: 1.415
+Train Loss=0.675005.	Valid Loss=0.801759
+Train Dice=0.326793.	Valid Dice=0.199753
+Train Hausdorff=0.702962.	Valid Hausdorff=0.66286
+Epoch: 47.    Minutes: 1.452
+Train Loss=0.643919.	Valid Loss=0.773861
+Train Dice=0.357978.	Valid Dice=0.229104
+Train Hausdorff=0.706815.	Valid Hausdorff=0.680786
+Epoch: 48.    Minutes: 1.442
+Train Loss=0.697232.	Valid Loss=0.810291
+Train Dice=0.305055.	Valid Dice=0.191203
+Train Hausdorff=0.745443.	Valid Hausdorff=0.727658
+Epoch: 49.    Minutes: 1.461
+Train Loss=0.649484.	Valid Loss=0.816734
+Train Dice=0.35293.	Valid Dice=0.184987
+Train Hausdorff=0.659914.	Valid Hausdorff=0.875523
+Epoch: 50.    Minutes: 1.413
+Train Loss=0.656185.	Valid Loss=0.784121
+Train Dice=0.345755.	Valid Dice=0.21772
+Train Hausdorff=0.742639.	Valid Hausdorff=0.65068
+Epoch: 51.    Minutes: 1.404
+Train Loss=0.644028.	Valid Loss=0.816319
+Train Dice=0.35834.	Valid Dice=0.186952
+Train Hausdorff=0.646887.	Valid Hausdorff=0.812801
+Epoch: 52.    Minutes: 1.37
+Train Loss=0.654301.	Valid Loss=0.796195
+Train Dice=0.348541.	Valid Dice=0.207895
+Train Hausdorff=0.657452.	Valid Hausdorff=0.73526
+Epoch: 53.    Minutes: 1.379
+Train Loss=0.659068.	Valid Loss=0.831005
+Train Dice=0.343922.	Valid Dice=0.171411
+Train Hausdorff=0.661178.	Valid Hausdorff=0.968495
+Epoch: 54.    Minutes: 1.393
+Train Loss=0.682919.	Valid Loss=0.82778
+Train Dice=0.31928.	Valid Dice=0.17412
+Train Hausdorff=0.777112.	Valid Hausdorff=0.889265
+Epoch: 55.    Minutes: 1.39
+Train Loss=0.645739.	Valid Loss=0.778439
+Train Dice=0.355946.	Valid Dice=0.223942
+Train Hausdorff=0.698423.	Valid Hausdorff=0.448212
+Epoch: 56.    Minutes: 1.455
+Train Loss=0.641782.	Valid Loss=0.787105
+Train Dice=0.360245.	Valid Dice=0.215063
+Train Hausdorff=0.644727.	Valid Hausdorff=0.730075
+Epoch: 57.    Minutes: 1.461
+Train Loss=0.6545.	Valid Loss=0.802275
+Train Dice=0.347337.	Valid Dice=0.201633
+Train Hausdorff=0.622656.	Valid Hausdorff=0.67136
+Epoch: 58.    Minutes: 1.46
+Train Loss=0.647262.	Valid Loss=0.741458
+Train Dice=0.354741.	Valid Dice=0.260295
+Train Hausdorff=0.690826.	Valid Hausdorff=0.555135
+Epoch: 59.    Minutes: 1.423
+Train Loss=0.63193.	Valid Loss=0.778226
+Train Dice=0.369787.	Valid Dice=0.224671
+Train Hausdorff=0.622455.	Valid Hausdorff=0.533052
+Epoch: 60.    Minutes: 1.45
+Train Loss=0.627778.	Valid Loss=0.804891
+Train Dice=0.373991.	Valid Dice=0.197182
+Train Hausdorff=0.635706.	Valid Hausdorff=0.803538
+Epoch: 61.    Minutes: 1.43
+Train Loss=0.643536.	Valid Loss=0.785514
+Train Dice=0.358196.	Valid Dice=0.216131
+Train Hausdorff=0.689992.	Valid Hausdorff=0.568485
+Epoch: 62.    Minutes: 1.452
+Train Loss=0.622724.	Valid Loss=0.775734
+Train Dice=0.379003.	Valid Dice=0.225919
+Train Hausdorff=0.623632.	Valid Hausdorff=0.671513
+Epoch: 63.    Minutes: 1.44
+Train Loss=0.636612.	Valid Loss=0.790387
+Train Dice=0.365352.	Valid Dice=0.211591
+Train Hausdorff=0.606635.	Valid Hausdorff=0.640521
+Epoch: 64.    Minutes: 1.476
+Train Loss=0.646994.	Valid Loss=0.781623
+Train Dice=0.355.	Valid Dice=0.225266
+Train Hausdorff=0.707994.	Valid Hausdorff=0.701187
+Epoch: 65.    Minutes: 1.467
+Train Loss=0.638376.	Valid Loss=0.80669
+Train Dice=0.365851.	Valid Dice=0.195725
+Train Hausdorff=0.693975.	Valid Hausdorff=0.729261
+Epoch: 66.    Minutes: 1.465
+Train Loss=0.632589.	Valid Loss=0.799643
+Train Dice=0.369945.	Valid Dice=0.202266
+Train Hausdorff=0.587117.	Valid Hausdorff=0.581585
+Epoch: 67.    Minutes: 1.452
+Train Loss=0.639103.	Valid Loss=0.790342
+Train Dice=0.362945.	Valid Dice=0.211817
+Train Hausdorff=0.629218.	Valid Hausdorff=0.763793
+Epoch: 68.    Minutes: 1.388
+Train Loss=0.651268.	Valid Loss=0.734514
+Train Dice=0.351509.	Valid Dice=0.267345
+Train Hausdorff=0.678409.	Valid Hausdorff=0.46136
+Epoch: 69.    Minutes: 1.378
+Train Loss=0.624267.	Valid Loss=0.769498
+Train Dice=0.378699.	Valid Dice=0.233182
+Train Hausdorff=0.596503.	Valid Hausdorff=0.480274
+Epoch: 70.    Minutes: 1.395
+Train Loss=0.619522.	Valid Loss=0.787848
+Train Dice=0.382946.	Valid Dice=0.21373
+Train Hausdorff=0.578095.	Valid Hausdorff=0.472145
+Epoch: 71.    Minutes: 1.392
+Train Loss=0.61468.	Valid Loss=0.824945
+Train Dice=0.38741.	Valid Dice=0.179836
+Train Hausdorff=0.515771.	Valid Hausdorff=0.593502
+Epoch: 72.    Minutes: 1.388
+Train Loss=0.629351.	Valid Loss=0.790846
+Train Dice=0.373185.	Valid Dice=0.216977
+Train Hausdorff=0.642109.	Valid Hausdorff=0.493228
+Epoch: 73.    Minutes: 1.379
+Train Loss=0.624699.	Valid Loss=0.780625
+Train Dice=0.378638.	Valid Dice=0.22275
+Train Hausdorff=0.589205.	Valid Hausdorff=0.431814
+Epoch: 74.    Minutes: 1.434
+Train Loss=0.641113.	Valid Loss=0.798637
+Train Dice=0.362806.	Valid Dice=0.20361
+Train Hausdorff=0.566453.	Valid Hausdorff=0.540436
+Epoch: 75.    Minutes: 1.466
+Train Loss=0.607121.	Valid Loss=0.783873
+Train Dice=0.395091.	Valid Dice=0.218263
+Train Hausdorff=0.568559.	Valid Hausdorff=0.548234
+Epoch: 76.    Minutes: 1.454
+Train Loss=0.630652.	Valid Loss=0.775156
+Train Dice=0.373055.	Valid Dice=0.227855
+Train Hausdorff=0.631031.	Valid Hausdorff=0.50887
+Epoch: 77.    Minutes: 1.471
+Train Loss=0.616496.	Valid Loss=0.76258
+Train Dice=0.387265.	Valid Dice=0.239722
+Train Hausdorff=0.579919.	Valid Hausdorff=0.402291
+Epoch: 78.    Minutes: 1.479
+Train Loss=0.607848.	Valid Loss=0.805925
+Train Dice=0.395145.	Valid Dice=0.195801
+Train Hausdorff=0.571673.	Valid Hausdorff=0.517265
+Epoch: 79.    Minutes: 1.451
+Train Loss=0.602998.	Valid Loss=0.815901
+Train Dice=0.400275.	Valid Dice=0.188283
+Train Hausdorff=0.539498.	Valid Hausdorff=0.58589
+Epoch: 80.    Minutes: 1.457
+Train Loss=0.616486.	Valid Loss=0.788849
+Train Dice=0.385587.	Valid Dice=0.214029
+Train Hausdorff=0.600814.	Valid Hausdorff=0.480275
+Epoch: 81.    Minutes: 1.448
+Train Loss=0.616752.	Valid Loss=0.75734
+Train Dice=0.385279.	Valid Dice=0.24561
+Train Hausdorff=0.597884.	Valid Hausdorff=0.498409
+Epoch: 82.    Minutes: 1.479
+Train Loss=0.61158.	Valid Loss=0.767478
+Train Dice=0.390855.	Valid Dice=0.234049
+Train Hausdorff=0.551533.	Valid Hausdorff=0.398695
+Epoch: 83.    Minutes: 1.51
+Train Loss=0.597327.	Valid Loss=0.784449
+Train Dice=0.40555.	Valid Dice=0.218172
+Train Hausdorff=0.548245.	Valid Hausdorff=0.437912
+Epoch: 84.    Minutes: 1.476
+Train Loss=0.603716.	Valid Loss=0.775251
+Train Dice=0.399651.	Valid Dice=0.227825
+Train Hausdorff=0.51964.	Valid Hausdorff=0.424724
+Epoch: 85.    Minutes: 1.417
+Train Loss=0.618104.	Valid Loss=0.781947
+Train Dice=0.385807.	Valid Dice=0.220575
+Train Hausdorff=0.509152.	Valid Hausdorff=0.553978
+Epoch: 86.    Minutes: 1.44
+Train Loss=0.618396.	Valid Loss=0.767109
+Train Dice=0.38574.	Valid Dice=0.236427
+Train Hausdorff=0.603586.	Valid Hausdorff=0.429037
+Epoch: 87.    Minutes: 1.393
+Train Loss=0.604229.	Valid Loss=0.799929
+Train Dice=0.401405.	Valid Dice=0.203763
+Train Hausdorff=0.536273.	Valid Hausdorff=0.47049
+Epoch: 88.    Minutes: 1.384
+Train Loss=0.611657.	Valid Loss=0.795136
+Train Dice=0.392805.	Valid Dice=0.208117
+Train Hausdorff=0.579089.	Valid Hausdorff=0.515888
+Epoch: 89.    Minutes: 1.407
+Train Loss=0.6053.	Valid Loss=0.76332
+Train Dice=0.399659.	Valid Dice=0.239453
+Train Hausdorff=0.590828.	Valid Hausdorff=0.446021
+Epoch: 90.    Minutes: 1.388
+Train Loss=0.588937.	Valid Loss=0.786859
+Train Dice=0.414007.	Valid Dice=0.216569
+Train Hausdorff=0.501826.	Valid Hausdorff=0.446914
+Epoch: 91.    Minutes: 1.407
+Train Loss=0.600178.	Valid Loss=0.796921
+Train Dice=0.40414.	Valid Dice=0.206989
+Train Hausdorff=0.529674.	Valid Hausdorff=0.436774
+Epoch: 92.    Minutes: 1.436
+Train Loss=0.590275.	Valid Loss=0.780023
+Train Dice=0.413175.	Valid Dice=0.223588
+Train Hausdorff=0.520714.	Valid Hausdorff=0.385134
+Epoch: 93.    Minutes: 1.431
+Train Loss=0.588311.	Valid Loss=0.792572
+Train Dice=0.414458.	Valid Dice=0.210396
+Train Hausdorff=0.517265.	Valid Hausdorff=0.420438
+Epoch: 94.    Minutes: 1.465
+Train Loss=0.587511.	Valid Loss=0.810716
+Train Dice=0.414627.	Valid Dice=0.191833
+Train Hausdorff=0.536838.	Valid Hausdorff=0.51365
+Epoch: 95.    Minutes: 1.436
+Train Loss=0.595275.	Valid Loss=0.799593
+Train Dice=0.406709.	Valid Dice=0.202153
+Train Hausdorff=0.571451.	Valid Hausdorff=0.441577
+Epoch: 96.    Minutes: 1.41
+Train Loss=0.615072.	Valid Loss=0.778288
+Train Dice=0.386776.	Valid Dice=0.223561
+Train Hausdorff=0.606343.	Valid Hausdorff=0.539868
+Epoch: 97.    Minutes: 1.447
+Train Loss=0.602158.	Valid Loss=0.770704
+Train Dice=0.400038.	Valid Dice=0.232334
+Train Hausdorff=0.564511.	Valid Hausdorff=0.448895
+Epoch: 98.    Minutes: 1.449
+Train Loss=0.596658.	Valid Loss=0.809237
+Train Dice=0.405555.	Valid Dice=0.195625
+Train Hausdorff=0.524799.	Valid Hausdorff=0.540402
+Epoch: 99.    Minutes: 1.445
+Train Loss=0.601399.	Valid Loss=0.797269
+Train Dice=0.401215.	Valid Dice=0.212396
+Train Hausdorff=0.553225.	Valid Hausdorff=0.473669
+Epoch: 100.    Minutes: 1.45
+Train Loss=0.580544.	Valid Loss=0.772915
+Train Dice=0.421957.	Valid Dice=0.232703
+Train Hausdorff=0.534015.	Valid Hausdorff=0.386177
+Epoch: 101.    Minutes: 1.45
+Train Loss=0.592637.	Valid Loss=0.815332
+Train Dice=0.410399.	Valid Dice=0.186741
+Train Hausdorff=0.50542.	Valid Hausdorff=0.614024
+Epoch: 102.    Minutes: 1.457
+Train Loss=0.612695.	Valid Loss=0.776825
+Train Dice=0.390889.	Valid Dice=0.225315
+Train Hausdorff=0.577063.	Valid Hausdorff=0.618371
+Epoch: 103.    Minutes: 1.406
+Train Loss=0.58999.	Valid Loss=0.783925
+Train Dice=0.4139.	Valid Dice=0.217936
+Train Hausdorff=0.535301.	Valid Hausdorff=0.413881
+Epoch: 104.    Minutes: 1.44
+Train Loss=0.581706.	Valid Loss=0.783389
+Train Dice=0.421201.	Valid Dice=0.218947
+Train Hausdorff=0.501835.	Valid Hausdorff=0.414144
+Epoch: 105.    Minutes: 1.379
+Train Loss=0.591537.	Valid Loss=0.790069
+Train Dice=0.41274.	Valid Dice=0.212701
+Train Hausdorff=0.479297.	Valid Hausdorff=0.363222
+Epoch: 106.    Minutes: 1.394
+Train Loss=0.593985.	Valid Loss=0.755615
+Train Dice=0.409424.	Valid Dice=0.246327
+Train Hausdorff=0.53835.	Valid Hausdorff=0.488312
+Epoch: 107.    Minutes: 1.426
+Train Loss=0.580798.	Valid Loss=0.791945
+Train Dice=0.422969.	Valid Dice=0.210752
+Train Hausdorff=0.461505.	Valid Hausdorff=0.480481
+Epoch: 108.    Minutes: 1.393
+Train Loss=0.58067.	Valid Loss=0.780881
+Train Dice=0.422025.	Valid Dice=0.222327
+Train Hausdorff=0.491964.	Valid Hausdorff=0.370975
+Epoch: 109.    Minutes: 1.38
+Train Loss=0.585963.	Valid Loss=0.810473
+Train Dice=0.416847.	Valid Dice=0.195112
+Train Hausdorff=0.498938.	Valid Hausdorff=0.378205
+Epoch: 110.    Minutes: 1.49
+Train Loss=0.600582.	Valid Loss=0.767319
+Train Dice=0.40246.	Valid Dice=0.234465
+Train Hausdorff=0.524134.	Valid Hausdorff=0.404225
+Epoch: 111.    Minutes: 1.487
+Train Loss=0.581322.	Valid Loss=0.789419
+Train Dice=0.421546.	Valid Dice=0.212343
+Train Hausdorff=0.471207.	Valid Hausdorff=0.393983
+Epoch: 112.    Minutes: 1.472
+Train Loss=0.574523.	Valid Loss=0.788906
+Train Dice=0.428059.	Valid Dice=0.213169
+Train Hausdorff=0.469246.	Valid Hausdorff=0.370936
+Epoch: 113.    Minutes: 1.447
+Train Loss=0.573938.	Valid Loss=0.774916
+Train Dice=0.428936.	Valid Dice=0.227264
+Train Hausdorff=0.457977.	Valid Hausdorff=0.42029
+Epoch: 114.    Minutes: 1.463
+Train Loss=0.568596.	Valid Loss=0.776247
+Train Dice=0.433718.	Valid Dice=0.225524
+Train Hausdorff=0.502438.	Valid Hausdorff=0.323106
+Epoch: 115.    Minutes: 1.466
+Train Loss=0.573627.	Valid Loss=0.781163
+Train Dice=0.42837.	Valid Dice=0.220846
+Train Hausdorff=0.504715.	Valid Hausdorff=0.366118
+Epoch: 116.    Minutes: 1.457
+Train Loss=0.551599.	Valid Loss=0.778139
+Train Dice=0.451398.	Valid Dice=0.225489
+Train Hausdorff=0.452515.	Valid Hausdorff=0.319812
+Epoch: 117.    Minutes: 1.483
+Train Loss=0.532326.	Valid Loss=0.786371
+Train Dice=0.470462.	Valid Dice=0.215596
+Train Hausdorff=0.426708.	Valid Hausdorff=0.34027
+Epoch: 118.    Minutes: 1.485
+Train Loss=0.527678.	Valid Loss=0.770939
+Train Dice=0.474942.	Valid Dice=0.233853
+Train Hausdorff=0.436995.	Valid Hausdorff=0.395558
+Epoch: 119.    Minutes: 1.466
+Train Loss=0.546817.	Valid Loss=0.774411
+Train Dice=0.456323.	Valid Dice=0.234974
+Train Hausdorff=0.450172.	Valid Hausdorff=0.326948
+Epoch: 120.    Minutes: 1.429
+Train Loss=0.551781.	Valid Loss=0.777226
+Train Dice=0.451614.	Valid Dice=0.227413
+Train Hausdorff=0.448696.	Valid Hausdorff=0.400059
+Epoch: 121.    Minutes: 1.431
+Train Loss=0.5883.	Valid Loss=0.790166
+Train Dice=0.415602.	Valid Dice=0.217334
+Train Hausdorff=0.498516.	Valid Hausdorff=0.344375
+Epoch: 122.    Minutes: 1.434
+Train Loss=0.568238.	Valid Loss=0.793172
+Train Dice=0.437366.	Valid Dice=0.209197
+Train Hausdorff=0.483204.	Valid Hausdorff=0.347703
+Epoch: 123.    Minutes: 1.41
+Train Loss=0.550931.	Valid Loss=0.797072
+Train Dice=0.452978.	Valid Dice=0.206171
+Train Hausdorff=0.456583.	Valid Hausdorff=0.393209
+Epoch: 124.    Minutes: 1.399
+Train Loss=0.541309.	Valid Loss=0.794391
+Train Dice=0.462131.	Valid Dice=0.211771
+Train Hausdorff=0.425793.	Valid Hausdorff=0.33202
+Epoch: 125.    Minutes: 1.408
+Train Loss=0.534483.	Valid Loss=0.785774
+Train Dice=0.468008.	Valid Dice=0.217591
+Train Hausdorff=0.457691.	Valid Hausdorff=0.293886
+Epoch: 126.    Minutes: 1.396
+Train Loss=0.539088.	Valid Loss=0.786544
+Train Dice=0.46423.	Valid Dice=0.217209
+Train Hausdorff=0.419061.	Valid Hausdorff=0.349553
+Epoch: 127.    Minutes: 1.387
+Train Loss=0.536916.	Valid Loss=0.788967
+Train Dice=0.465748.	Valid Dice=0.2149
+Train Hausdorff=0.433205.	Valid Hausdorff=0.340427
+Epoch: 128.    Minutes: 1.412
+Train Loss=0.541562.	Valid Loss=0.780533
+Train Dice=0.460703.	Valid Dice=0.221274
+Train Hausdorff=0.423211.	Valid Hausdorff=0.356293
+Epoch: 129.    Minutes: 1.413
+Train Loss=0.568793.	Valid Loss=0.794476
+Train Dice=0.433142.	Valid Dice=0.207426
+Train Hausdorff=0.495715.	Valid Hausdorff=0.353159
+Epoch: 130.    Minutes: 1.427
+Train Loss=0.53016.	Valid Loss=0.800386
+Train Dice=0.471964.	Valid Dice=0.201113
+Train Hausdorff=0.434765.	Valid Hausdorff=0.307235
+Epoch: 131.    Minutes: 1.45
+Train Loss=0.55407.	Valid Loss=0.798229
+Train Dice=0.448029.	Valid Dice=0.203642
+Train Hausdorff=0.459659.	Valid Hausdorff=0.391414
+Epoch: 132.    Minutes: 1.454
+Train Loss=0.529987.	Valid Loss=0.789052
+Train Dice=0.4718.	Valid Dice=0.213439
+Train Hausdorff=0.416783.	Valid Hausdorff=0.349417
+Epoch: 133.    Minutes: 1.478
+Train Loss=0.52711.	Valid Loss=0.792436
+Train Dice=0.474823.	Valid Dice=0.211592
+Train Hausdorff=0.414457.	Valid Hausdorff=0.332866
+Epoch: 134.    Minutes: 1.484
+Train Loss=0.527931.	Valid Loss=0.786749
+Train Dice=0.47405.	Valid Dice=0.21535
+Train Hausdorff=0.445508.	Valid Hausdorff=0.366917
+Epoch: 135.    Minutes: 1.453
+Train Loss=0.528369.	Valid Loss=0.795207
+Train Dice=0.473802.	Valid Dice=0.20769
+Train Hausdorff=0.432492.	Valid Hausdorff=0.31084
+Epoch: 136.    Minutes: 1.452
+Train Loss=0.52447.	Valid Loss=0.788021
+Train Dice=0.477593.	Valid Dice=0.214379
+Train Hausdorff=0.412928.	Valid Hausdorff=0.348243
+Epoch: 137.    Minutes: 1.434
+Train Loss=0.53307.	Valid Loss=0.788139
+Train Dice=0.46901.	Valid Dice=0.214211
+Train Hausdorff=0.426964.	Valid Hausdorff=0.300284
+Epoch: 138.    Minutes: 1.451
+Train Loss=0.536634.	Valid Loss=0.791652
+Train Dice=0.465517.	Valid Dice=0.210664
+Train Hausdorff=0.437124.	Valid Hausdorff=0.302257
+Epoch: 139.    Minutes: 1.441
+Train Loss=0.543475.	Valid Loss=0.790512
+Train Dice=0.459009.	Valid Dice=0.212019
+Train Hausdorff=0.423017.	Valid Hausdorff=0.336717
+Epoch: 140.    Minutes: 1.433
+Train Loss=0.539173.	Valid Loss=0.786469
+Train Dice=0.463604.	Valid Dice=0.217163
+Train Hausdorff=0.441581.	Valid Hausdorff=0.304006
+Epoch: 141.    Minutes: 1.409
+Train Loss=0.526363.	Valid Loss=0.788752
+Train Dice=0.476528.	Valid Dice=0.214138
+Train Hausdorff=0.412465.	Valid Hausdorff=0.337586
+Epoch: 142.    Minutes: 1.393
+Train Loss=0.532209.	Valid Loss=0.793135
+Train Dice=0.469968.	Valid Dice=0.209039
+Train Hausdorff=0.419785.	Valid Hausdorff=0.305379
+Epoch: 143.    Minutes: 1.427
+Train Loss=0.507115.	Valid Loss=0.813164
+Train Dice=0.49478.	Valid Dice=0.190292
+Train Hausdorff=0.409119.	Valid Hausdorff=0.312262
+Epoch: 144.    Minutes: 1.417
+Train Loss=0.529655.	Valid Loss=0.78255
+Train Dice=0.472417.	Valid Dice=0.222217
+Train Hausdorff=0.458641.	Valid Hausdorff=0.311036
+Epoch: 145.    Minutes: 1.38
+Train Loss=0.53298.	Valid Loss=0.795543
+Train Dice=0.468848.	Valid Dice=0.210056
+Train Hausdorff=0.447481.	Valid Hausdorff=0.350932
+Epoch: 146.    Minutes: 1.423
+Train Loss=0.533278.	Valid Loss=0.804428
+Train Dice=0.468868.	Valid Dice=0.199851
+Train Hausdorff=0.433573.	Valid Hausdorff=0.294462
+Epoch: 147.    Minutes: 1.44
+Train Loss=0.509951.	Valid Loss=0.800915
+Train Dice=0.492327.	Valid Dice=0.202227
+Train Hausdorff=0.430986.	Valid Hausdorff=0.332286
+Epoch: 148.    Minutes: 1.424
+Train Loss=0.514411.	Valid Loss=0.800427
+Train Dice=0.488357.	Valid Dice=0.202839
+Train Hausdorff=0.383614.	Valid Hausdorff=0.350681
+Epoch: 149.    Minutes: 1.437
+Train Loss=0.510522.	Valid Loss=0.793765
+Train Dice=0.492882.	Valid Dice=0.207938
+Train Hausdorff=0.433894.	Valid Hausdorff=0.341664
+Epoch: 150.    Minutes: 1.452
+Train Loss=0.535411.	Valid Loss=0.789339
+Train Dice=0.468183.	Valid Dice=0.212726
+Train Hausdorff=0.431522.	Valid Hausdorff=0.331954
+Epoch: 151.    Minutes: 1.452
+Train Loss=0.507049.	Valid Loss=0.796403
+Train Dice=0.49562.	Valid Dice=0.2054
+Train Hausdorff=0.39472.	Valid Hausdorff=0.299936
+Epoch: 152.    Minutes: 1.448
+Train Loss=0.500297.	Valid Loss=0.795636
+Train Dice=0.501865.	Valid Dice=0.206422
+Train Hausdorff=0.365824.	Valid Hausdorff=0.382942
+Epoch: 153.    Minutes: 1.434
+Train Loss=0.509049.	Valid Loss=0.808138
+Train Dice=0.493029.	Valid Dice=0.193611
+Train Hausdorff=0.419568.	Valid Hausdorff=0.342294
+Epoch: 154.    Minutes: 1.451
+Train Loss=0.50567.	Valid Loss=0.795811
+Train Dice=0.496932.	Valid Dice=0.206044
+Train Hausdorff=0.399513.	Valid Hausdorff=0.29466
+Epoch: 155.    Minutes: 1.464
+Train Loss=0.501909.	Valid Loss=0.797521
+Train Dice=0.500673.	Valid Dice=0.205489
+Train Hausdorff=0.3687.	Valid Hausdorff=0.330125
+Epoch: 156.    Minutes: 1.446
+Train Loss=0.51504.	Valid Loss=0.793733
+Train Dice=0.487247.	Valid Dice=0.20834
+Train Hausdorff=0.405331.	Valid Hausdorff=0.269383
+Epoch: 157.    Minutes: 1.456
+Train Loss=0.528839.	Valid Loss=0.784596
+Train Dice=0.473235.	Valid Dice=0.218184
+Train Hausdorff=0.363918.	Valid Hausdorff=0.349112
+Epoch: 158.    Minutes: 1.44
+Train Loss=0.512569.	Valid Loss=0.791755
+Train Dice=0.489273.	Valid Dice=0.210464
+Train Hausdorff=0.410801.	Valid Hausdorff=0.353758
+Epoch: 159.    Minutes: 1.422
+Train Loss=0.519578.	Valid Loss=0.805221
+Train Dice=0.482288.	Valid Dice=0.196695
+Train Hausdorff=0.419798.	Valid Hausdorff=0.356822
+Epoch: 160.    Minutes: 1.41
+Train Loss=0.50542.	Valid Loss=0.790027
+Train Dice=0.496338.	Valid Dice=0.212646
+Train Hausdorff=0.390211.	Valid Hausdorff=0.270587
+Epoch: 161.    Minutes: 1.412
+Train Loss=0.506977.	Valid Loss=0.794221
+Train Dice=0.494578.	Valid Dice=0.207426
+Train Hausdorff=0.390587.	Valid Hausdorff=0.312848
+Epoch: 162.    Minutes: 1.382
+Train Loss=0.503874.	Valid Loss=0.795738
+Train Dice=0.497792.	Valid Dice=0.2061
+Train Hausdorff=0.375182.	Valid Hausdorff=0.303556
+Epoch: 163.    Minutes: 1.39
+Train Loss=0.503436.	Valid Loss=0.779148
+Train Dice=0.498417.	Valid Dice=0.223515
+Train Hausdorff=0.385198.	Valid Hausdorff=0.306794
+Epoch: 164.    Minutes: 1.384
+Train Loss=0.53979.	Valid Loss=0.795289
+Train Dice=0.462354.	Valid Dice=0.206573
+Train Hausdorff=0.41994.	Valid Hausdorff=0.514219
+Epoch: 165.    Minutes: 1.412
+Train Loss=0.511411.	Valid Loss=0.798661
+Train Dice=0.490741.	Valid Dice=0.203497
+Train Hausdorff=0.424317.	Valid Hausdorff=0.336361
+Epoch: 166.    Minutes: 1.439
+Train Loss=0.498528.	Valid Loss=0.796078
+Train Dice=0.50385.	Valid Dice=0.205336
+Train Hausdorff=0.381279.	Valid Hausdorff=0.338802
+Epoch: 167.    Minutes: 1.461
+Train Loss=0.502942.	Valid Loss=0.803934
+Train Dice=0.499752.	Valid Dice=0.19842
+Train Hausdorff=0.392459.	Valid Hausdorff=0.334122
+Epoch: 168.    Minutes: 1.455
+Train Loss=0.507842.	Valid Loss=0.814094
+Train Dice=0.495704.	Valid Dice=0.188781
+Train Hausdorff=0.390626.	Valid Hausdorff=0.421103
+Epoch: 169.    Minutes: 1.459
+Train Loss=0.499153.	Valid Loss=0.785529
+Train Dice=0.505622.	Valid Dice=0.21845
+Train Hausdorff=0.390336.	Valid Hausdorff=0.331404
+Epoch: 170.    Minutes: 1.463
+Train Loss=0.49944.	Valid Loss=0.791968
+Train Dice=0.504834.	Valid Dice=0.210091
+Train Hausdorff=0.384597.	Valid Hausdorff=0.33171
+Epoch: 171.    Minutes: 1.439
+Train Loss=0.497159.	Valid Loss=0.797858
+Train Dice=0.507008.	Valid Dice=0.206657
+Train Hausdorff=0.38973.	Valid Hausdorff=0.339814
+Epoch: 172.    Minutes: 1.466
+Train Loss=0.491167.	Valid Loss=0.785298
+Train Dice=0.51172.	Valid Dice=0.217744
+Train Hausdorff=0.392807.	Valid Hausdorff=0.366652
+Epoch: 173.    Minutes: 1.499
+Train Loss=0.487782.	Valid Loss=0.806694
+Train Dice=0.514343.	Valid Dice=0.195418
+Train Hausdorff=0.386176.	Valid Hausdorff=0.375566
+Epoch: 174.    Minutes: 1.472
+Train Loss=0.486661.	Valid Loss=0.798941
+Train Dice=0.515235.	Valid Dice=0.20283
+Train Hausdorff=0.397852.	Valid Hausdorff=0.42488
+Epoch: 175.    Minutes: 1.444
+Train Loss=0.498185.	Valid Loss=0.78287
+Train Dice=0.503458.	Valid Dice=0.218568
+Train Hausdorff=0.386227.	Valid Hausdorff=0.389243
+Epoch: 176.    Minutes: 1.426
+Train Loss=0.494452.	Valid Loss=0.810646
+Train Dice=0.507086.	Valid Dice=0.19093
+Train Hausdorff=0.385747.	Valid Hausdorff=0.396526
+Epoch: 177.    Minutes: 1.39
+Train Loss=0.504105.	Valid Loss=0.795374
+Train Dice=0.497216.	Valid Dice=0.206021
+Train Hausdorff=0.410694.	Valid Hausdorff=0.479226
+Epoch: 178.    Minutes: 1.399
+Train Loss=0.490513.	Valid Loss=0.798049
+Train Dice=0.510693.	Valid Dice=0.20313
+Train Hausdorff=0.390637.	Valid Hausdorff=0.326911
+Epoch: 179.    Minutes: 1.394
+Train Loss=0.49022.	Valid Loss=0.791898
+Train Dice=0.51082.	Valid Dice=0.20939
+Train Hausdorff=0.401511.	Valid Hausdorff=0.322821
+Epoch: 180.    Minutes: 1.386
+Train Loss=0.483798.	Valid Loss=0.79816
+Train Dice=0.517302.	Valid Dice=0.203248
+Train Hausdorff=0.379296.	Valid Hausdorff=0.420683
+Epoch: 181.    Minutes: 1.397
+Train Loss=0.495374.	Valid Loss=0.803794
+Train Dice=0.505793.	Valid Dice=0.197797
+Train Hausdorff=0.384722.	Valid Hausdorff=0.345311
+Epoch: 182.    Minutes: 1.403
+Train Loss=0.490311.	Valid Loss=0.777657
+Train Dice=0.510942.	Valid Dice=0.224111
+Train Hausdorff=0.407354.	Valid Hausdorff=0.338135
+Epoch: 183.    Minutes: 1.433
+Train Loss=0.490045.	Valid Loss=0.8108
+Train Dice=0.511218.	Valid Dice=0.192325
+Train Hausdorff=0.379822.	Valid Hausdorff=0.473767
+Epoch: 184.    Minutes: 1.453
+Train Loss=0.4923.	Valid Loss=0.783715
+Train Dice=0.508928.	Valid Dice=0.22011
+Train Hausdorff=0.402362.	Valid Hausdorff=0.387547
+Epoch: 185.    Minutes: 1.483
+Train Loss=0.503091.	Valid Loss=0.790466
+Train Dice=0.498217.	Valid Dice=0.21283
+Train Hausdorff=0.400541.	Valid Hausdorff=0.444334
+Epoch: 186.    Minutes: 1.455
+Train Loss=0.505126.	Valid Loss=0.793899
+Train Dice=0.496263.	Valid Dice=0.208516
+Train Hausdorff=0.410083.	Valid Hausdorff=0.358281
+Epoch: 187.    Minutes: 1.494
+Train Loss=0.488326.	Valid Loss=0.804587
+Train Dice=0.513048.	Valid Dice=0.197116
+Train Hausdorff=0.38443.	Valid Hausdorff=0.346034
+Epoch: 188.    Minutes: 1.468
+Train Loss=0.484403.	Valid Loss=0.791266
+Train Dice=0.517107.	Valid Dice=0.210355
+Train Hausdorff=0.377015.	Valid Hausdorff=0.362303
+Epoch: 189.    Minutes: 1.451
+Train Loss=0.481643.	Valid Loss=0.810979
+Train Dice=0.519898.	Valid Dice=0.190657
+Train Hausdorff=0.373406.	Valid Hausdorff=0.320689
+Epoch: 190.    Minutes: 1.438
+Train Loss=0.481703.	Valid Loss=0.800359
+Train Dice=0.519714.	Valid Dice=0.203409
+Train Hausdorff=0.404574.	Valid Hausdorff=0.465793
+Epoch: 191.    Minutes: 1.461
+Train Loss=0.48591.	Valid Loss=0.801258
+Train Dice=0.51574.	Valid Dice=0.201043
+Train Hausdorff=0.394464.	Valid Hausdorff=0.394315
+Epoch: 192.    Minutes: 1.475
+Train Loss=0.491519.	Valid Loss=0.809924
+Train Dice=0.510058.	Valid Dice=0.194775
+Train Hausdorff=0.395623.	Valid Hausdorff=0.429384
+Epoch: 193.    Minutes: 1.445
+Train Loss=0.4982.	Valid Loss=0.79146
+Train Dice=0.503834.	Valid Dice=0.214037
+Train Hausdorff=0.385087.	Valid Hausdorff=0.399285
+Epoch: 194.    Minutes: 1.479
+Train Loss=0.493098.	Valid Loss=0.803362
+Train Dice=0.508749.	Valid Dice=0.201358
+Train Hausdorff=0.383801.	Valid Hausdorff=0.32396
+Epoch: 195.    Minutes: 1.429
+Train Loss=0.483573.	Valid Loss=0.787057
+Train Dice=0.518389.	Valid Dice=0.217695
+Train Hausdorff=0.387153.	Valid Hausdorff=0.39269
+Epoch: 196.    Minutes: 1.407
+Train Loss=0.479993.	Valid Loss=0.802728
+Train Dice=0.522403.	Valid Dice=0.207905
+Train Hausdorff=0.369496.	Valid Hausdorff=0.314017
+Epoch: 197.    Minutes: 1.383
+Train Loss=0.47553.	Valid Loss=0.789628
+Train Dice=0.527436.	Valid Dice=0.220319
+Train Hausdorff=0.369056.	Valid Hausdorff=0.38746
+Epoch: 198.    Minutes: 1.383
+Train Loss=0.481661.	Valid Loss=0.798973
+Train Dice=0.52256.	Valid Dice=0.213836
+Train Hausdorff=0.384715.	Valid Hausdorff=0.324459
+Epoch: 199.    Minutes: 1.388
+Train Loss=0.474987.	Valid Loss=0.83656
+Train Dice=0.529923.	Valid Dice=0.203518
+Train Hausdorff=0.381778.	Valid Hausdorff=0.405591
+Epoch: 200.    Minutes: 1.371
+Train Loss=0.471652.	Valid Loss=0.821348
+Train Dice=0.532941.	Valid Dice=0.197058
+Train Hausdorff=0.363875.	Valid Hausdorff=0.38559
+Epoch: 201.    Minutes: 1.393
+Train Loss=0.482048.	Valid Loss=0.781891
+Train Dice=0.523469.	Valid Dice=0.22551
+Train Hausdorff=0.383565.	Valid Hausdorff=0.394091
+Epoch: 202.    Minutes: 1.442
+Train Loss=0.492967.	Valid Loss=0.802137
+Train Dice=0.513463.	Valid Dice=0.202031
+Train Hausdorff=0.383295.	Valid Hausdorff=0.453292
+Epoch: 203.    Minutes: 1.467
+Train Loss=0.48463.	Valid Loss=0.793575
+Train Dice=0.522882.	Valid Dice=0.208893
+Train Hausdorff=0.382866.	Valid Hausdorff=0.439335
+Epoch: 204.    Minutes: 1.467
+Train Loss=0.477096.	Valid Loss=0.800571
+Train Dice=0.528985.	Valid Dice=0.204883
+Train Hausdorff=0.379896.	Valid Hausdorff=0.396277
+Epoch: 205.    Minutes: 1.464
+Train Loss=0.482041.	Valid Loss=0.799822
+Train Dice=0.523398.	Valid Dice=0.204141
+Train Hausdorff=0.370568.	Valid Hausdorff=0.4205
+Epoch: 206.    Minutes: 1.487
+Train Loss=0.486537.	Valid Loss=0.795515
+Train Dice=0.517112.	Valid Dice=0.207614
+Train Hausdorff=0.380399.	Valid Hausdorff=0.422976
+Epoch: 207.    Minutes: 1.469
+Train Loss=0.485508.	Valid Loss=0.773455
+Train Dice=0.517463.	Valid Dice=0.228282
+Train Hausdorff=0.36912.	Valid Hausdorff=0.314024
+Epoch: 208.    Minutes: 1.478
+Train Loss=0.484866.	Valid Loss=0.783378
+Train Dice=0.516962.	Valid Dice=0.219022
+Train Hausdorff=0.388363.	Valid Hausdorff=0.421038
+Epoch: 209.    Minutes: 1.474
+Train Loss=0.487649.	Valid Loss=0.799798
+Train Dice=0.514241.	Valid Dice=0.201582
+Train Hausdorff=0.380868.	Valid Hausdorff=0.296563
+Epoch: 210.    Minutes: 1.452
+Train Loss=0.484188.	Valid Loss=0.780469
+Train Dice=0.516997.	Valid Dice=0.220696
+Train Hausdorff=0.380051.	Valid Hausdorff=0.325301
+Epoch: 211.    Minutes: 1.456
+Train Loss=0.471246.	Valid Loss=0.801034
+Train Dice=0.529864.	Valid Dice=0.20009
+Train Hausdorff=0.378845.	Valid Hausdorff=0.400369
+Epoch: 212.    Minutes: 1.447
+Train Loss=0.473465.	Valid Loss=0.787891
+Train Dice=0.527534.	Valid Dice=0.213137
+Train Hausdorff=0.384087.	Valid Hausdorff=0.356723
+Epoch: 213.    Minutes: 1.442
+Train Loss=0.475935.	Valid Loss=0.78194
+Train Dice=0.52503.	Valid Dice=0.219088
+Train Hausdorff=0.380933.	Valid Hausdorff=0.373988
+Epoch: 214.    Minutes: 1.407
+Train Loss=0.470897.	Valid Loss=0.792614
+Train Dice=0.53005.	Valid Dice=0.208435
+Train Hausdorff=0.377349.	Valid Hausdorff=0.396566
+Epoch: 215.    Minutes: 1.372
+Train Loss=0.468785.	Valid Loss=0.790036
+Train Dice=0.532168.	Valid Dice=0.211013
+Train Hausdorff=0.36117.	Valid Hausdorff=0.452002
+Epoch: 216.    Minutes: 1.372
+Train Loss=0.470878.	Valid Loss=0.80113
+Train Dice=0.530044.	Valid Dice=0.19994
+Train Hausdorff=0.369106.	Valid Hausdorff=0.453348
+Epoch: 217.    Minutes: 1.375
+Train Loss=0.469608.	Valid Loss=0.784736
+Train Dice=0.53134.	Valid Dice=0.216291
+Train Hausdorff=0.355206.	Valid Hausdorff=0.372005
+Epoch: 218.    Minutes: 1.368
+Train Loss=0.469976.	Valid Loss=0.80553
+Train Dice=0.530972.	Valid Dice=0.195563
+Train Hausdorff=0.349015.	Valid Hausdorff=0.489012
+Epoch: 219.    Minutes: 1.399
+Train Loss=0.468368.	Valid Loss=0.781354
+Train Dice=0.532576.	Valid Dice=0.219721
+Train Hausdorff=0.374001.	Valid Hausdorff=0.354489
+Epoch: 220.    Minutes: 1.442
+Train Loss=0.475123.	Valid Loss=0.778032
+Train Dice=0.525814.	Valid Dice=0.223055
+Train Hausdorff=0.380227.	Valid Hausdorff=0.369776
+Epoch: 221.    Minutes: 1.462
+Train Loss=0.469896.	Valid Loss=0.790952
+Train Dice=0.531029.	Valid Dice=0.210148
+Train Hausdorff=0.358104.	Valid Hausdorff=0.368891
+Epoch: 222.    Minutes: 1.466
+Train Loss=0.467043.	Valid Loss=0.800463
+Train Dice=0.533878.	Valid Dice=0.2007
+Train Hausdorff=0.383421.	Valid Hausdorff=0.305226
+Epoch: 223.    Minutes: 1.47
+Train Loss=0.470252.	Valid Loss=0.805725
+Train Dice=0.530683.	Valid Dice=0.195358
+Train Hausdorff=0.353622.	Valid Hausdorff=0.34996
+Epoch: 224.    Minutes: 1.458
+Train Loss=0.479324.	Valid Loss=0.782124
+Train Dice=0.521609.	Valid Dice=0.219152
+Train Hausdorff=0.389361.	Valid Hausdorff=0.357133
+Epoch: 225.    Minutes: 1.495
+Train Loss=0.478174.	Valid Loss=0.795185
+Train Dice=0.52278.	Valid Dice=0.206123
+Train Hausdorff=0.375987.	Valid Hausdorff=0.490678
+Epoch: 226.    Minutes: 1.472
+Train Loss=0.477551.	Valid Loss=0.799844
+Train Dice=0.523384.	Valid Dice=0.201518
+Train Hausdorff=0.359837.	Valid Hausdorff=0.467669
+Epoch: 227.    Minutes: 1.456
+Train Loss=0.469202.	Valid Loss=0.796692
+Train Dice=0.531723.	Valid Dice=0.20461
+Train Hausdorff=0.357818.	Valid Hausdorff=0.452384
+Epoch: 228.    Minutes: 1.439
+Train Loss=0.467772.	Valid Loss=0.787968
+Train Dice=0.533182.	Valid Dice=0.213397
+Train Hausdorff=0.360756.	Valid Hausdorff=0.389367
+Epoch: 229.    Minutes: 1.471
+Train Loss=0.467899.	Valid Loss=0.796198
+Train Dice=0.533027.	Valid Dice=0.205288
+Train Hausdorff=0.343812.	Valid Hausdorff=0.397328
+Epoch: 230.    Minutes: 1.426
+Train Loss=0.468695.	Valid Loss=0.797502
+Train Dice=0.532243.	Valid Dice=0.203992
+Train Hausdorff=0.361544.	Valid Hausdorff=0.358797
+Epoch: 231.    Minutes: 1.441
+Train Loss=0.470131.	Valid Loss=0.77593
+Train Dice=0.530837.	Valid Dice=0.225909
+Train Hausdorff=0.368788.	Valid Hausdorff=0.404359
+Epoch: 232.    Minutes: 1.385
+Train Loss=0.471139.	Valid Loss=0.786543
+Train Dice=0.529811.	Valid Dice=0.214924
+Train Hausdorff=0.370089.	Valid Hausdorff=0.300988
+Epoch: 233.    Minutes: 1.394
+Train Loss=0.466908.	Valid Loss=0.786802
+Train Dice=0.534065.	Valid Dice=0.2147
+Train Hausdorff=0.376476.	Valid Hausdorff=0.365901
+Epoch: 234.    Minutes: 1.367
+Train Loss=0.470651.	Valid Loss=0.761238
+Train Dice=0.53031.	Valid Dice=0.240092
+Train Hausdorff=0.366749.	Valid Hausdorff=0.358598
+Epoch: 235.    Minutes: 1.396
+Train Loss=0.468832.	Valid Loss=0.770365
+Train Dice=0.532148.	Valid Dice=0.230898
+Train Hausdorff=0.353327.	Valid Hausdorff=0.343762
+Epoch: 236.    Minutes: 1.381
+Train Loss=0.464865.	Valid Loss=0.765042
+Train Dice=0.536096.	Valid Dice=0.236227
+Train Hausdorff=0.359149.	Valid Hausdorff=0.396115
+Epoch: 237.    Minutes: 1.389
+Train Loss=0.473353.	Valid Loss=0.766121
+Train Dice=0.527631.	Valid Dice=0.235418
+Train Hausdorff=0.370346.	Valid Hausdorff=0.444347
+Epoch: 238.    Minutes: 1.455
+Train Loss=0.458097.	Valid Loss=0.774816
+Train Dice=0.542957.	Valid Dice=0.226463
+Train Hausdorff=0.376.	Valid Hausdorff=0.336314
+Epoch: 239.    Minutes: 1.454
+Train Loss=0.465975.	Valid Loss=0.767052
+Train Dice=0.535027.	Valid Dice=0.234242
+Train Hausdorff=0.340726.	Valid Hausdorff=0.337776
+Epoch: 240.    Minutes: 1.454
+Train Loss=0.469959.	Valid Loss=0.772337
+Train Dice=0.531032.	Valid Dice=0.228964
+Train Hausdorff=0.3814.	Valid Hausdorff=0.340847
+Epoch: 241.    Minutes: 1.432
+Train Loss=0.457703.	Valid Loss=0.778587
+Train Dice=0.543263.	Valid Dice=0.2227
+Train Hausdorff=0.351968.	Valid Hausdorff=0.351435
+Epoch: 242.    Minutes: 1.473
+Train Loss=0.455656.	Valid Loss=0.76136
+Train Dice=0.545392.	Valid Dice=0.240043
+Train Hausdorff=0.373208.	Valid Hausdorff=0.377041
+Epoch: 243.    Minutes: 1.437
+Train Loss=0.454905.	Valid Loss=0.771632
+Train Dice=0.546051.	Valid Dice=0.229834
+Train Hausdorff=0.35085.	Valid Hausdorff=0.32334
+Epoch: 244.    Minutes: 1.407
+Train Loss=0.450813.	Valid Loss=0.767927
+Train Dice=0.550181.	Valid Dice=0.233608
+Train Hausdorff=0.351285.	Valid Hausdorff=0.362893
+Epoch: 245.    Minutes: 1.428
+Train Loss=0.446765.	Valid Loss=0.761945
+Train Dice=0.55423.	Valid Dice=0.240102
+Train Hausdorff=0.341478.	Valid Hausdorff=0.315347
+Epoch: 246.    Minutes: 1.475
+Train Loss=0.450041.	Valid Loss=0.7752
+Train Dice=0.550916.	Valid Dice=0.226795
+Train Hausdorff=0.359111.	Valid Hausdorff=0.364083
+Epoch: 247.    Minutes: 1.465
+Train Loss=0.449181.	Valid Loss=0.767952
+Train Dice=0.551807.	Valid Dice=0.234214
+Train Hausdorff=0.34943.	Valid Hausdorff=0.34745
+Epoch: 248.    Minutes: 1.43
+Train Loss=0.450337.	Valid Loss=0.775446
+Train Dice=0.550646.	Valid Dice=0.227918
+Train Hausdorff=0.327547.	Valid Hausdorff=0.368728
+Epoch: 249.    Minutes: 1.427
+Train Loss=0.454456.	Valid Loss=0.787301
+Train Dice=0.546588.	Valid Dice=0.216259
+Train Hausdorff=0.343525.	Valid Hausdorff=0.331651
+Epoch: 250.    Minutes: 1.413
+Train Loss=0.451435.	Valid Loss=0.759125
+Train Dice=0.549655.	Valid Dice=0.243823
+Train Hausdorff=0.341413.	Valid Hausdorff=0.336904
+Epoch: 251.    Minutes: 1.387
+Train Loss=0.454396.	Valid Loss=0.78328
+Train Dice=0.546664.	Valid Dice=0.222807
+Train Hausdorff=0.343795.	Valid Hausdorff=0.338218
+Epoch: 252.    Minutes: 1.378
+Train Loss=0.454127.	Valid Loss=0.776472
+Train Dice=0.546918.	Valid Dice=0.228054
+Train Hausdorff=0.374838.	Valid Hausdorff=0.377062
+Epoch: 253.    Minutes: 1.372
+Train Loss=0.45014.	Valid Loss=0.780347
+Train Dice=0.550936.	Valid Dice=0.224298
+Train Hausdorff=0.339283.	Valid Hausdorff=0.364634
+Epoch: 254.    Minutes: 1.39
+Train Loss=0.451093.	Valid Loss=0.784936
+Train Dice=0.549962.	Valid Dice=0.219991
+Train Hausdorff=0.348679.	Valid Hausdorff=0.415293
+Epoch: 255.    Minutes: 1.388
+Train Loss=0.451171.	Valid Loss=0.771626
+Train Dice=0.549952.	Valid Dice=0.233096
+Train Hausdorff=0.339003.	Valid Hausdorff=0.337825
+Epoch: 256.    Minutes: 1.439
+Train Loss=0.452264.	Valid Loss=0.786748
+Train Dice=0.548995.	Valid Dice=0.220504
+Train Hausdorff=0.367141.	Valid Hausdorff=0.408878
+Epoch: 257.    Minutes: 1.445
+Train Loss=0.450742.	Valid Loss=0.770408
+Train Dice=0.55029.	Valid Dice=0.238914
+Train Hausdorff=0.341679.	Valid Hausdorff=0.350163
+Epoch: 258.    Minutes: 1.438
+Train Loss=0.447926.	Valid Loss=0.772763
+Train Dice=0.553359.	Valid Dice=0.237879
+Train Hausdorff=0.348578.	Valid Hausdorff=0.324286
+Epoch: 259.    Minutes: 1.441
+Train Loss=0.454561.	Valid Loss=0.787863
+Train Dice=0.546845.	Valid Dice=0.218234
+Train Hausdorff=0.356263.	Valid Hausdorff=0.364657
+Epoch: 260.    Minutes: 1.465
+Train Loss=0.455001.	Valid Loss=0.785381
+Train Dice=0.546233.	Valid Dice=0.219668
+Train Hausdorff=0.359965.	Valid Hausdorff=0.394848
+Epoch: 261.    Minutes: 1.419
+Train Loss=0.451975.	Valid Loss=0.787015
+Train Dice=0.549589.	Valid Dice=0.218841
+Train Hausdorff=0.349861.	Valid Hausdorff=0.47411
+Epoch: 262.    Minutes: 1.486
+Train Loss=0.451752.	Valid Loss=0.762232
+Train Dice=0.549476.	Valid Dice=0.24121
+Train Hausdorff=0.341832.	Valid Hausdorff=0.349408
+Epoch: 263.    Minutes: 1.474
+Train Loss=0.445828.	Valid Loss=0.772637
+Train Dice=0.555709.	Valid Dice=0.230334
+Train Hausdorff=0.350792.	Valid Hausdorff=0.350831
+Epoch: 264.    Minutes: 1.471
+Train Loss=0.445795.	Valid Loss=0.781154
+Train Dice=0.555754.	Valid Dice=0.224332
+Train Hausdorff=0.32747.	Valid Hausdorff=0.309269
+Epoch: 265.    Minutes: 1.455
+Train Loss=0.44707.	Valid Loss=0.780411
+Train Dice=0.554665.	Valid Dice=0.225986
+Train Hausdorff=0.339317.	Valid Hausdorff=0.301613
+Epoch: 266.    Minutes: 1.502
+Train Loss=0.450067.	Valid Loss=0.789887
+Train Dice=0.551737.	Valid Dice=0.220657
+Train Hausdorff=0.333787.	Valid Hausdorff=0.378523
+Epoch: 267.    Minutes: 1.474
+Train Loss=0.446501.	Valid Loss=0.777739
+Train Dice=0.554816.	Valid Dice=0.230472
+Train Hausdorff=0.344259.	Valid Hausdorff=0.347619
+Epoch: 268.    Minutes: 1.427
+Train Loss=0.444504.	Valid Loss=0.779192
+Train Dice=0.557171.	Valid Dice=0.227564
+Train Hausdorff=0.333098.	Valid Hausdorff=0.392179
+Epoch: 269.    Minutes: 1.379
+Train Loss=0.448051.	Valid Loss=0.763906
+Train Dice=0.553153.	Valid Dice=0.242153
+Train Hausdorff=0.329643.	Valid Hausdorff=0.334726
+Epoch: 270.    Minutes: 1.384
+Train Loss=0.447649.	Valid Loss=0.780205
+Train Dice=0.554086.	Valid Dice=0.225767
+Train Hausdorff=0.33088.	Valid Hausdorff=0.375189
+Epoch: 271.    Minutes: 1.378
+Train Loss=0.443754.	Valid Loss=0.783902
+Train Dice=0.557608.	Valid Dice=0.223217
+Train Hausdorff=0.331919.	Valid Hausdorff=0.384002
+Epoch: 272.    Minutes: 1.386
+Train Loss=0.446597.	Valid Loss=0.776365
+Train Dice=0.55493.	Valid Dice=0.229242
+Train Hausdorff=0.357211.	Valid Hausdorff=0.380025
+Epoch: 273.    Minutes: 1.388
+Train Loss=0.442242.	Valid Loss=0.774595
+Train Dice=0.559161.	Valid Dice=0.233961
+Train Hausdorff=0.343539.	Valid Hausdorff=0.315846
+Epoch: 274.    Minutes: 1.443
+Train Loss=0.443321.	Valid Loss=0.77656
+Train Dice=0.558272.	Valid Dice=0.230308
+Train Hausdorff=0.354169.	Valid Hausdorff=0.372697
+Epoch: 275.    Minutes: 1.438
+Train Loss=0.444069.	Valid Loss=0.770067
+Train Dice=0.557504.	Valid Dice=0.238874
+Train Hausdorff=0.330792.	Valid Hausdorff=0.365316
+Epoch: 276.    Minutes: 1.477
+Train Loss=0.447442.	Valid Loss=0.754041
+Train Dice=0.554414.	Valid Dice=0.252604
+Train Hausdorff=0.336403.	Valid Hausdorff=0.330269
+Epoch: 277.    Minutes: 1.452
+Train Loss=0.443777.	Valid Loss=0.759542
+Train Dice=0.557916.	Valid Dice=0.249345
+Train Hausdorff=0.333067.	Valid Hausdorff=0.350329
+Epoch: 278.    Minutes: 1.478
+Train Loss=0.443106.	Valid Loss=0.770957
+Train Dice=0.55883.	Valid Dice=0.237697
+Train Hausdorff=0.328723.	Valid Hausdorff=0.336554
+Epoch: 279.    Minutes: 1.479
+Train Loss=0.441877.	Valid Loss=0.769674
+Train Dice=0.560147.	Valid Dice=0.238051
+Train Hausdorff=0.335883.	Valid Hausdorff=0.363194
+Epoch: 280.    Minutes: 1.469
+Train Loss=0.443798.	Valid Loss=0.764149
+Train Dice=0.558457.	Valid Dice=0.241721
+Train Hausdorff=0.327373.	Valid Hausdorff=0.350191
+Epoch: 281.    Minutes: 1.464
+Train Loss=0.444333.	Valid Loss=0.764945
+Train Dice=0.557969.	Valid Dice=0.239995
+Train Hausdorff=0.33925.	Valid Hausdorff=0.363909
+Epoch: 282.    Minutes: 1.48
+Train Loss=0.440779.	Valid Loss=0.758699
+Train Dice=0.561806.	Valid Dice=0.24376
+Train Hausdorff=0.324272.	Valid Hausdorff=0.332076
+Epoch: 283.    Minutes: 1.506
+Train Loss=0.438927.	Valid Loss=0.767456
+Train Dice=0.563498.	Valid Dice=0.234678
+Train Hausdorff=0.33298.	Valid Hausdorff=0.365395
+Epoch: 284.    Minutes: 1.481
+Train Loss=0.446327.	Valid Loss=0.778741
+Train Dice=0.556672.	Valid Dice=0.223822
+Train Hausdorff=0.321497.	Valid Hausdorff=0.410921
+Epoch: 285.    Minutes: 1.459
+Train Loss=0.441317.	Valid Loss=0.769779
+Train Dice=0.562391.	Valid Dice=0.233879
+Train Hausdorff=0.347753.	Valid Hausdorff=0.361656
+Epoch: 286.    Minutes: 1.457
+Train Loss=0.444348.	Valid Loss=0.762709
+Train Dice=0.560051.	Valid Dice=0.245875
+Train Hausdorff=0.330565.	Valid Hausdorff=0.32613
+Epoch: 287.    Minutes: 1.404
+Train Loss=0.44264.	Valid Loss=0.767543
+Train Dice=0.562324.	Valid Dice=0.243764
+Train Hausdorff=0.326822.	Valid Hausdorff=0.346712
+Epoch: 288.    Minutes: 1.395
+Train Loss=0.44359.	Valid Loss=0.770923
+Train Dice=0.562356.	Valid Dice=0.246739
+Train Hausdorff=0.334573.	Valid Hausdorff=0.34002
+Epoch: 289.    Minutes: 1.463
+Train Loss=0.448093.	Valid Loss=0.760035
+Train Dice=0.558936.	Valid Dice=0.246857
+Train Hausdorff=0.328628.	Valid Hausdorff=0.327065
+Epoch: 290.    Minutes: 1.405
+Train Loss=0.44509.	Valid Loss=0.751564
+Train Dice=0.561676.	Valid Dice=0.249851
+Train Hausdorff=0.331086.	Valid Hausdorff=0.332627
+Epoch: 291.    Minutes: 1.393
+Train Loss=0.440557.	Valid Loss=0.752238
+Train Dice=0.563252.	Valid Dice=0.249005
+Train Hausdorff=0.328218.	Valid Hausdorff=0.32227
+Epoch: 292.    Minutes: 1.441
+Train Loss=0.438853.	Valid Loss=0.757273
+Train Dice=0.564264.	Valid Dice=0.243894
+Train Hausdorff=0.319362.	Valid Hausdorff=0.334919
+Epoch: 293.    Minutes: 1.418
+Train Loss=0.440499.	Valid Loss=0.749813
+Train Dice=0.562201.	Valid Dice=0.251309
+Train Hausdorff=0.33275.	Valid Hausdorff=0.329592
+Epoch: 294.    Minutes: 1.421
+Train Loss=0.440794.	Valid Loss=0.75527
+Train Dice=0.561608.	Valid Dice=0.245812
+Train Hausdorff=0.313806.	Valid Hausdorff=0.340319
+Epoch: 295.    Minutes: 1.43
+Train Loss=0.439092.	Valid Loss=0.754704
+Train Dice=0.563191.	Valid Dice=0.246368
+Train Hausdorff=0.324577.	Valid Hausdorff=0.329378
+Epoch: 296.    Minutes: 1.459
+Train Loss=0.438771.	Valid Loss=0.757145
+Train Dice=0.563372.	Valid Dice=0.243903
+Train Hausdorff=0.320401.	Valid Hausdorff=0.336413
+Epoch: 297.    Minutes: 1.429
+Train Loss=0.43882.	Valid Loss=0.754675
+Train Dice=0.563252.	Valid Dice=0.246369
+Train Hausdorff=0.332829.	Valid Hausdorff=0.331073
+Epoch: 298.    Minutes: 1.461
+Train Loss=0.43977.	Valid Loss=0.755604
+Train Dice=0.562084.	Valid Dice=0.245462
+Train Hausdorff=0.328676.	Valid Hausdorff=0.333447
+Epoch: 299.    Minutes: 1.45
+Train Loss=0.437154.	Valid Loss=0.755982
+Train Dice=0.564641.	Valid Dice=0.245063
+Train Hausdorff=0.326566.	Valid Hausdorff=0.333185
+Test: Dice = 0.426837, Hausdorff = 0.36657. Minutes: 0.34
+Trained model (LGG_ET_model.pth) saved.
