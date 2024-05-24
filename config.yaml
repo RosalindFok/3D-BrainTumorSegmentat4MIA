@@ -1,14 +1,15 @@
-Hyperparameter:
-  batch_size: 1
-  learning_rate: 1e-4
-  epoch: 300
-
 Type:
   task: train # predict, train. predict is for inference only; train is for training and testing the model.
   save_tag: Null
 
 Model:
   seg_outChans: 1
+  year: 2024 # 2018, 2024
   dataset: HGG # HGG, LGG
-  tumor_type: ET # WT(whole tumor) TC(tumor core) ET(enhancing tumor)
+  tumor_type: WT # WT(whole tumor) TC(tumor core) ET(enhancing tumor)
   VAE_enable: True # True, False
+
+Hyperparameter:
+  batch_size: 1
+  learning_rate: 1e-4
+  epoch: 300

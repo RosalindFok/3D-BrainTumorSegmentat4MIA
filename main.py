@@ -16,9 +16,9 @@ import numpy as np
 from torch.utils.data import DataLoader
 
 from model import NvNet
-from dataset import BraTSDataset
+from dataset import BraTSDataset_from_hdf5, BraTSDataset_from_nii
 from criteria import CombinedLoss, Hausdorff_Distance
-from load_path import hdf5_path_list, save_npz_path, config
+from load_path import hdf5_path_list, save_npz_path, config, subjects_2024_list
 
 
 def setup_device() -> torch.device:
@@ -27,14 +27,14 @@ def setup_device() -> torch.device:
     torch.cuda.init() if torch.cuda.is_available() else None
     return device
 
-def change_label_with_tumor_type(label : torch.Tensor, tumor_type : str) -> torch.Tensor:
+def change_label_with_tumor_type(label : torch.Tensor, tumor_type : str, dataset_year : int) -> torch.Tensor:
     # Map segmentation labels to binary labels
     if tumor_type == 'WT':
         threshold = 1
     elif tumor_type == 'TC':
         threshold = 2
     elif tumor_type == 'ET':
-        threshold = 4
+        threshold = 4 if dataset_year == 2018 else 3 # ET label is 4 in 2018, 3 in 2024
     else:
         raise ValueError('Invalid type')
     label = torch.where(label >= threshold, torch.tensor(1.0, dtype=torch.float32), torch.tensor(0.0, dtype=torch.float32))
@@ -53,10 +53,20 @@ def main():
     # Data
     dataset_name = config['Model']['dataset']
     assert dataset_name.upper() == 'HGG' or dataset_name.upper() == 'LGG', 'Dataset name must be HGG or LGG.'
-    hdf5_path = [x for x in hdf5_path_list if dataset_name in x][0]
-    train_dataloader = DataLoader(BraTSDataset(hdf5_path=hdf5_path, tag='train'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
-    valid_dataloader = DataLoader(BraTSDataset(hdf5_path=hdf5_path, tag='valid'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
-    test_dataloader  = DataLoader(BraTSDataset(hdf5_path=hdf5_path, tag='test' ), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    dataset_year = config['Model']['year']
+    assert dataset_year == 2018 or dataset_year == 2024, 'Dataset year must be 2018 or 2024.'
+    if dataset_year == 2018:
+        hdf5_path = [x for x in hdf5_path_list if dataset_name in x][0]
+        train_dataloader = DataLoader(BraTSDataset_from_hdf5(hdf5_path=hdf5_path, tag='train'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+        valid_dataloader = DataLoader(BraTSDataset_from_hdf5(hdf5_path=hdf5_path, tag='valid'), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+        test_dataloader  = DataLoader(BraTSDataset_from_hdf5(hdf5_path=hdf5_path, tag='test' ), batch_size=batch_size, shuffle=False, num_workers=1) # num_workers MUST be 1: because we use h5py, which cannot be pickled, in torch Dataset.
+    elif dataset_year == 2024:
+        train_list = subjects_2024_list[len(subjects_2024_list)//7*0 : len(subjects_2024_list)//7*5]
+        valid_list = subjects_2024_list[len(subjects_2024_list)//7*5 : len(subjects_2024_list)//7*6]
+        test_list  = subjects_2024_list[len(subjects_2024_list)//7*6 : len(subjects_2024_list)//7*7]
+        train_dataloader = DataLoader(BraTSDataset_from_nii(subjects_list=train_list), batch_size=batch_size, shuffle=False)
+        valid_dataloader = DataLoader(BraTSDataset_from_nii(subjects_list=valid_list), batch_size=batch_size, shuffle=False)
+        test_dataloader  = DataLoader(BraTSDataset_from_nii(subjects_list=test_list ), batch_size=batch_size, shuffle=False)
     # Network
     seg_outChans = config['Model']['seg_outChans']
     tumor_type   = config['Model']['tumor_type']
@@ -65,9 +75,9 @@ def main():
     model = NvNet(inChans=4, input_shape=input_shape, seg_outChans=seg_outChans, activation='relu', normalizaiton='group_normalization', VAE_enable=VAE_enable, mode='trilinear')
 
     trainable_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(model)
     print(f'The number of trainable parametes is {trainable_parameters}.')
     model = model.to(device=device)
-    print(model)
     # Loss and Metric
     criterion = CombinedLoss(k1=0.1, k2=0.1)
     get_dice  = CombinedLoss(k1=0, k2=0) # when k1=k2=0, the result of CombinedLoss = 1-dice
@@ -86,7 +96,7 @@ def main():
                 param_group['lr'] = learning_rate
             torch.set_grad_enabled(True)
             for img, label in train_dataloader:
-                label = change_label_with_tumor_type(label, tumor_type)
+                label = change_label_with_tumor_type(label=label, tumor_type=tumor_type, dataset_year=dataset_year)
                 img, label = img.to(device), label.to(device)
                 pred = model(img)
                 seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
@@ -105,7 +115,7 @@ def main():
             valid_loss, valid_dice, valid_hausdorff_distance = [], [], []
             with torch.no_grad():
                 for img, label in valid_dataloader:
-                    label = change_label_with_tumor_type(label, tumor_type)
+                    label = change_label_with_tumor_type(label=label, tumor_type=tumor_type, dataset_year=dataset_year)
                     img, label = img.to(device), label.to(device)
                     pred = model(img)
                     seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
@@ -129,7 +139,7 @@ def main():
         test_dice, test_hausdorff_distance = [], []
         with torch.no_grad():
             for idx, (img, label) in enumerate(test_dataloader):
-                label = change_label_with_tumor_type(label, tumor_type)
+                label = change_label_with_tumor_type(label=label, tumor_type=tumor_type, dataset_year=dataset_year)
                 img, label = img.to(device), label.to(device)
                 pred = model(img)
                 seg_y_pred, rec_y_pred, y_mid = pred[0][:,:seg_outChans,:,:,:], pred[0][:,seg_outChans:,:,:,:], pred[1]
@@ -146,8 +156,8 @@ def main():
                 # label.shape = batch_size, 160, 192, 128
                 # seg_y_pred.shape = batch_size, seg_outChans=1, 160, 192, 128
                 # rec_y_pred.shape = batch_size, 4, 160, 192, 128
-                # 4 = [Flair, T1, T1CE, T2]
                 np.savez(f'{os.path.join(save_npz_path, str(idx)+".npz")}', img=img, label=label, seg=seg_y_pred, rec=rec_y_pred)
+
         end_time = time.time()
         print(f'Test: Dice = {round(np.mean(test_dice), 6)}, Hausdorff = {round(np.mean(test_hausdorff_distance), 6)}. Minutes: {round((end_time-start_time)/60, 3)}')
         return {'dice': round(np.mean(test_dice), 6), 'hausdorff': round(np.mean(test_hausdorff_distance), 6)}
@@ -156,10 +166,11 @@ def main():
     task = config['Type']['task']
     assert task.lower() == 'train' or task.lower() == 'predict', 'Task must be train or predict.'
     save_tag = config['Type']['save_tag']
-    tmp = ''.join([dataset_name, '_', tumor_type, '_model'])
-    saved_model_path = ''.join([tmp, '.pth']) if not save_tag else ''.join([tmp, '_', str(save_tag), '.pth'])
+    tmp = ''.join([dataset_name, '_', tumor_type, '_model']) if dataset_year == 2018 else ''.join([tumor_type, '_model'])
+    saved_model_path = ''.join([str(dataset_year), '_', tmp, '.pth']) if not save_tag else ''.join([tmp, '_', str(save_tag), '.pth'])
 
     if task.lower() == 'train':
+        print(f'Training the model ({saved_model_path})...')
         model = train_valid(model)
         dice_hausdorff = test(model)
         # Save the trained model
@@ -168,6 +179,7 @@ def main():
         torch.save(checkpoint, saved_model_path)
         print(f'Trained model ({saved_model_path}) saved.')
     elif task.lower() == 'predict':
+        print(f'Predicting the model ({saved_model_path})...')
         if os.path.exists(saved_model_path):
             checkpoint = torch.load(saved_model_path)
             model.load_state_dict(checkpoint['model'])  

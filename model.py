@@ -43,19 +43,15 @@ class EncoderBlock(nn.Module):
         self.conv1 = nn.Conv3d(in_channels=inChans, out_channels=outChans, kernel_size=3, stride=stride, padding=padding)
         self.conv2 = nn.Conv3d(in_channels=inChans, out_channels=outChans, kernel_size=3, stride=stride, padding=padding)
         
-        
     def forward(self, x):
         residual = x
-        
         out = self.norm1(x)
         out = self.actv1(out)
         out = self.conv1(out)
         out = self.norm2(out)
         out = self.actv2(out)
         out = self.conv2(out)
-        
         out += residual
-        
         return out
 
 
@@ -75,15 +71,12 @@ class LinearUpSampling(nn.Module):
         out = self.conv1(x)
         # out = self.up1(out)
         out = nn.functional.interpolate(out, scale_factor=self.scale_factor, mode=self.mode, align_corners=self.align_corners)
-
         if skipx is not None:
             if out.shape != skipx.shape: 
               out = nn.functional.interpolate(out, size=skipx.shape[-3:], mode=self.mode, align_corners=self.align_corners)
             out = torch.cat((out, skipx), 1)
             out = self.conv2(out)
-        
         return out
-
 
 
 class DecoderBlock(nn.Module):
@@ -105,21 +98,16 @@ class DecoderBlock(nn.Module):
         self.conv1 = nn.Conv3d(in_channels=inChans, out_channels=outChans, kernel_size=3, stride=stride, padding=padding)
         self.conv2 = nn.Conv3d(in_channels=outChans, out_channels=outChans, kernel_size=3, stride=stride, padding=padding)
         
-        
     def forward(self, x):
         residual = x
-        
         out = self.norm1(x)
         out = self.actv1(out)
         out = self.conv1(out)
         out = self.norm2(out)
         out = self.actv2(out)
         out = self.conv2(out)
-        
         out += residual
-        
         return out
-
 
 
 class OutputTransition(nn.Module):
@@ -135,7 +123,6 @@ class OutputTransition(nn.Module):
         
     def forward(self, x):
         return self.actv1(self.conv1(x))
-
 
 
 def VDraw(x):
@@ -178,7 +165,6 @@ class VDResampling(nn.Module):
         out = self.actv2(out)
         out = out.view((1, 128, self.dense_features[0],self.dense_features[1],self.dense_features[2]))
         out = self.up0(out)
-        
         return out, distr
             
     def num_flat_features(self, x):
@@ -186,9 +172,7 @@ class VDResampling(nn.Module):
         num_features = 1
         for s in size:
             num_features *= s
-            
         return num_features
-
 
 
 class VDecoderBlock(nn.Module):
@@ -206,7 +190,6 @@ class VDecoderBlock(nn.Module):
         out = self.block(out)
 
         return out
-
 
 
 class VAE(nn.Module):
@@ -230,8 +213,6 @@ class VAE(nn.Module):
         out = self.vd_end(out)
 
         return out, distr
-
-
 
 class NvNet(nn.Module):
     def __init__(self, inChans, input_shape, seg_outChans, activation, normalizaiton, VAE_enable, mode):
