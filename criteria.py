@@ -66,6 +66,7 @@ class Hausdorff_Distance(_Loss):
         super(Hausdorff_Distance, self).__init__()
 
     def forward(self, y_pred, y_true):
+        # Not Accurate Hausdorff
         y_pred = y_pred.squeeze().detach().cpu().numpy()
         y_true = y_true.squeeze().detach().cpu().numpy()
         hausdorff_distance = []

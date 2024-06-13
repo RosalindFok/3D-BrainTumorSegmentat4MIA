@@ -43,10 +43,7 @@ class BraTSDataset_from_hdf5(Dataset):
 
 # Read from raw data is easier than read from hdf5 file
 class BraTSDataset_from_nii(Dataset):
-
-
     # https://www.synapse.org/#!Synapse:syn52939291/wiki/625694
-
     def __init__(self, subjects_list : list) -> None:
         super().__init__()
         self.nii_path_list = [[os.path.join(each_subject, file_name) for file_name in os.listdir(each_subject) ] for each_subject in subjects_list]
